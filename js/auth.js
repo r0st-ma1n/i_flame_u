@@ -1,14 +1,14 @@
 // Авторизация и регистрация
 $(document).ready(function() {
+    const API_BASE = 'api'; // Путь к API
+
     // Переключение между вкладками
     $('.auth-tab').on('click', function() {
         const targetTab = $(this).data('tab');
 
-        // Убираем активный класс со всех кнопок и форм
         $('.auth-tab').removeClass('active');
         $('.auth-form').removeClass('active');
 
-        // Добавляем активный класс к текущей кнопке и форме
         $(this).addClass('active');
         $('#' + targetTab).addClass('active');
     });
@@ -20,7 +20,6 @@ $(document).ready(function() {
         const email = $('#loginEmail').val().trim();
         const password = $('#loginPassword').val();
 
-        // Базовая валидация
         if (!validateEmail(email)) {
             showAlert('Пожалуйста, введите корректный email адрес', 'error');
             return;
@@ -31,19 +30,32 @@ $(document).ready(function() {
             return;
         }
 
-        // Симуляция запроса к серверу
         showAlert('Выполняется вход...', 'info');
 
-        setTimeout(() => {
-            // В реальном приложении здесь будет запрос к серверу
-            console.log('Вход:', { email, password });
+        // Отправка запроса на сервер
+        $.ajax({
+            url: `${API_BASE}/login.php`,
+            type: 'POST',
+            data: JSON.stringify({
+                email: email,
+                password: password
+            }),
+            contentType: 'application/json',
+            success: function(response) {
+                showAlert('Вход выполнен успешно!', 'success');
+                // Сохраняем данные пользователя
+                localStorage.setItem('user', JSON.stringify(response.user));
+                localStorage.setItem('isLoggedIn', 'true');
 
-            // Перенаправление на главную страницу после успешного входа
-            showAlert('Вход выполнен успешно!', 'success');
-            setTimeout(() => {
-                window.location.href = './index.html';
-            }, 1000);
-        }, 1500);
+                setTimeout(() => {
+                    window.location.href = './index.html';
+                }, 1000);
+            },
+            error: function(xhr) {
+                const response = JSON.parse(xhr.responseText);
+                showAlert(response.message || 'Ошибка входа', 'error');
+            }
+        });
     });
 
     // Валидация формы регистрации
@@ -88,33 +100,38 @@ $(document).ready(function() {
             return;
         }
 
-        // Симуляция запроса к серверу
         showAlert('Регистрация...', 'info');
 
-        setTimeout(() => {
-            // В реальном приложении здесь будет запрос к серверу
-            console.log('Регистрация:', {
-                firstName,
-                lastName,
-                email,
-                phone,
-                password
-            });
+        // Отправка запроса на сервер
+        $.ajax({
+            url: `${API_BASE}/register.php`,
+            type: 'POST',
+            data: JSON.stringify({
+                first_name: firstName,
+                last_name: lastName,
+                email: email,
+                phone: phone,
+                password: password
+            }),
+            contentType: 'application/json',
+            success: function(response) {
+                showAlert('Регистрация прошла успешно!', 'success');
 
-            showAlert('Регистрация прошла успешно!', 'success');
+                setTimeout(() => {
+                    $('.auth-tab').removeClass('active');
+                    $('.auth-form').removeClass('active');
+                    $('.auth-tab[data-tab="login"]').addClass('active');
+                    $('#login').addClass('active');
+                    $('#loginEmail').val(email);
 
-            // Переключение на вкладку входа
-            setTimeout(() => {
-                $('.auth-tab').removeClass('active');
-                $('.auth-form').removeClass('active');
-                $('.auth-tab[data-tab="login"]').addClass('active');
-                $('#login').addClass('active');
-                $('#loginEmail').val(email);
-
-                // Очистка формы регистрации
-                $('#registerForm')[0].reset();
-            }, 1500);
-        }, 2000);
+                    $('#registerForm')[0].reset();
+                }, 1500);
+            },
+            error: function(xhr) {
+                const response = JSON.parse(xhr.responseText);
+                showAlert(response.message || 'Ошибка регистрации', 'error');
+            }
+        });
     });
 
     // Социальная авторизация
@@ -122,7 +139,6 @@ $(document).ready(function() {
         const provider = $(this).hasClass('google-btn') ? 'Google' : 'Facebook';
         showAlert(`Авторизация через ${provider}...`, 'info');
 
-        // В реальном приложении здесь будет OAuth авторизация
         setTimeout(() => {
             showAlert(`Авторизация через ${provider} пока недоступна`, 'warning');
         }, 1000);
@@ -147,7 +163,6 @@ $(document).ready(function() {
 
     // Функция показа уведомлений
     function showAlert(message, type = 'info') {
-        // Удаляем предыдущие уведомления
         $('.auth-alert').remove();
 
         const alertClass = type === 'error' ? 'alert-danger' :
@@ -165,7 +180,6 @@ $(document).ready(function() {
 
         $('.auth-form-content').prepend(alert);
 
-        // Автоматическое скрытие через 5 секунд
         setTimeout(() => {
             alert.alert('close');
         }, 5000);
