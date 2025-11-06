@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Hotel Template">
+    <meta name="keywords" content="Hotel, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Авторизация - Зефир</title>
+
+    <!-- Шрифты от гугла -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <!-- Css стили -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/flaticon.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/auth.css" type="text/css">
+</head>
+
+<body>
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Верхний баннер-->
+    <header class="header-section">
+        <div class="container-fluid">
+            <div class="inner-header">
+                <div class="logo">
+                    <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                </div>
+                <div class="nav-right">
+                    <a href="./auth.html" class="primary-btn">Войти</a>
+                </div>
+                <nav class="main-menu mobile-menu">
+                    <ul>
+                        <li><a href="./index.html">Главная</a></li>
+                        <li><a href="./about-us.html">О нас</a></li>
+                        <li><a href="rooms.html">Комнаты</a></li>
+                        <li><a href="services.html">Сервис</a></li>
+                        <li><a href="./contact.html">Контакты</a></li>
+                    </ul>
+                </nav>
+                <div id="mobile-menu-wrap"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Герой секция -->
+    <section class="hero-auth set-bg" data-setbg="img/hero-bg.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="hero-text">
+                        <h1>Добро пожаловать</h1>
+                        <p>Войдите в свой аккаунт или создайте новый</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция авторизации -->
+    <section class="auth-section spad">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="auth-container">
+                        <div class="auth-tabs">
+                            <button class="auth-tab active" data-tab="login">Вход</button>
+                            <button class="auth-tab" data-tab="register">Регистрация</button>
+                        </div>
+
+                        <!-- Форма входа -->
+                        <div id="login" class="auth-form active">
+                            <form id="loginForm" class="auth-form-content">
+                                <div class="form-group">
+                                    <label for="loginEmail">Email адрес</label>
+                                    <input type="email" id="loginEmail" name="email" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="loginPassword">Пароль</label>
+                                    <input type="password" id="loginPassword" name="password" class="form-control" required>
+                                </div>
+                                <div class="form-options">
+                                    <div class="remember-me">
+                                        <input type="checkbox" id="rememberMe">
+                                        <label for="rememberMe">Запомнить меня</label>
+                                    </div>
+                                    <a href="#" class="forgot-password">Забыли пароль?</a>
+                                </div>
+                                <button type="submit" class="primary-btn auth-btn">Войти</button>
+                                <div class="auth-divider">
+                                    <span>или войдите через</span>
+                                </div>
+                                <div class="social-auth">
+                                    <button type="button" class="social-btn google-btn">
+                                        <i class="fa fa-google"></i>
+                                        Google
+                                    </button>
+                                    <button type="button" class="social-btn facebook-btn">
+                                        <i class="fa fa-facebook"></i>
+                                        Facebook
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Форма регистрации -->
+                        <div id="register" class="auth-form">
+                            <form id="registerForm" class="auth-form-content">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="registerFirstName">Имя</label>
+                                            <input type="text" id="registerFirstName" name="firstName" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="registerLastName">Фамилия</label>
+                                            <input type="text" id="registerLastName" name="lastName" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="registerEmail">Email адрес</label>
+                                    <input type="email" id="registerEmail" name="email" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="registerPhone">Телефон</label>
+                                    <input type="tel" id="registerPhone" name="phone" class="form-control" required>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="registerPassword">Пароль</label>
+                                            <input type="password" id="registerPassword" name="password" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="registerConfirmPassword">Подтвердите пароль</label>
+                                            <input type="password" id="registerConfirmPassword" name="confirmPassword" class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group terms-agree">
+                                    <input type="checkbox" id="agreeTerms" required>
+                                    <label for="agreeTerms">Я согласен с <a href="#">условиями использования</a> и <a href="#">политикой конфиденциальности</a></label>
+                                </div>
+                                <button type="submit" class="primary-btn auth-btn">Зарегистрироваться</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Низ страницы -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="footer-item">
+                        <div class="footer-logo">
+                            <a href="#"><img src="img/logo.png" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="footer-item">
+                        <h5>Новостная рассылка</h5>
+                        <div class="newslatter-form">
+                            <input type="text" placeholder="Электронная почта">
+                            <button type="submit">Подписаться</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="footer-item">
+                        <h5>Контакты</h5>
+                        <ul>
+                            <li><img src="img/placeholder.png" alt="">г. Тюмень, ул. М.Горького 44/2, 2 этаж</li>
+                            <li><img src="img/phone.png" alt="">+7(3452)66-21-41</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul>
+                            <li class="active"><a href="./index.html">Главная</a></li>
+                            <li><a href="#">О нас</a></li>
+                            <li><a href="#">Комнаты</a></li>
+                            <li><a href="#">Удобства</a></li>
+                            <li><a href="#">Контакты</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row pt-5">
+                    <div class="col-lg-12 ">
+                        <div class="small text-white text-center">
+                            Copyright &copy;
+                            <script>
+                                document.write(new Date().getFullYear());
+                            </script> All rights reserved | Разработано <i class="fa fa-heart-o" aria-hidden="true"></i> <a href="https://vk.com/rost" target="_blank">Имангуловым Рустемом</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Js плагины -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+
+</html>
