@@ -163,7 +163,7 @@ $(document).ready(function() {
             </div>
         `);
 
-        $('.auth-container').prepend(alert);
+        $('.auth-form-content').prepend(alert);
 
         // Автоматическое скрытие через 5 секунд
         setTimeout(() => {
