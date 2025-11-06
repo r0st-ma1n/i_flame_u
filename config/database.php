@@ -2,6 +2,7 @@
 class Database {
     private $host = "localhost";
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     private $db_name = "hotel_zefir";
     private $username = "your_username";
     private $password = "your_password";
@@ -14,6 +15,8 @@ class Database {
             $this->conn->exec("set names utf8");
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 =======
+=======
+>>>>>>> Stashed changes
     private $db_name = "new_schema";
     private $username = "root"; // или ваш пользователь MySQL
     private $password = ""; // ваш пароль MySQL
@@ -30,6 +33,9 @@ class Database {
             );
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         } catch(PDOException $exception) {
             echo "Connection error: " . $exception->getMessage();
@@ -38,7 +44,10 @@ class Database {
     }
 }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 
 // Класс для работы с пользователями (авторизация)
 class User {
@@ -225,5 +234,8 @@ try {
 } catch(PDOException $exception) {
     echo "Database connection error: " . $exception->getMessage();
 }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 ?>
