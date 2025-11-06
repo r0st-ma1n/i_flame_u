@@ -2156,6 +2156,20 @@ ol {
     font-size: 24px;
     position: relative;
     display: inline-block;
+    text-decoration: none;
+}
+
+.cart-img {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
+    /* Делаем белую иконку */
+    transition: all 0.3s ease;
+}
+
+.cart-icon a:hover .cart-img {
+    filter: brightness(0) invert(1) sepia(1) saturate(5) hue-rotate(330deg);
+    /* Оранжевый при наведении */
 }
 
 .cart-icon #cart-count {
@@ -2171,6 +2185,7 @@ ol {
     line-height: 20px;
     font-size: 12px;
     font-weight: 600;
+    border: 2px solid #353535;
 }
 
 
@@ -2277,10 +2292,18 @@ ol {
     cursor: pointer;
     font-size: 18px;
     margin-left: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
 }
 
 .remove-item:hover {
     color: #ff5252;
+    background: rgba(255, 107, 107, 0.1);
 }
 
 .empty-cart {
@@ -2316,6 +2339,108 @@ ol {
 }
 
 
+/* ---------------------- Customer Info Form Styles ------------------------*/
+
+.customer-info {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.customer-info h4 {
+    color: #242424;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #242424;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: "Montserrat Alternates", sans-serif;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    border-color: #F9AD81;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(249, 173, 129, 0.2);
+}
+
+.form-control.error {
+    border-color: #ff6b6b;
+}
+
+.error-message {
+    color: #ff6b6b;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+
+/* Стили для текстового поля */
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 80px;
+}
+
+
+/* Стили для обязательных полей */
+
+.form-group label[for*="customer-name"],
+.form-group label[for*="customer-phone"] {
+    position: relative;
+}
+
+.form-group label[for*="customer-name"]::after,
+.form-group label[for*="customer-phone"]::after {
+    content: "*";
+    color: #ff6b6b;
+    margin-left: 4px;
+}
+
+
+/* Стили для успешного оформления заказа */
+
+.order-success {
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.order-success .success-icon {
+    font-size: 48px;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+.order-success h4 {
+    color: #242424;
+    margin-bottom: 15px;
+}
+
+.order-success p {
+    color: #5a5a5a;
+    margin-bottom: 20px;
+}
+
+
 /* Адаптивность для корзины */
 
 @media only screen and (max-width: 767px) {
@@ -2332,6 +2457,134 @@ ol {
     .cart-icon {
         margin-left: 10px;
     }
+    .customer-info {
+        margin-top: 15px;
+        padding-top: 15px;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-control {
+        padding: 10px 12px;
+    }
+}
+
+
+/* ---------------------- Customer Info Form Styles ------------------------*/
+
+.customer-info {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.customer-info h4 {
+    color: #242424;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #242424;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: "Montserrat Alternates", sans-serif;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    border-color: #F9AD81;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(249, 173, 129, 0.2);
+}
+
+.form-control.error {
+    border-color: #ff6b6b;
+}
+
+.error-message {
+    color: #ff6b6b;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+
+/* Стили для текстового поля */
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 80px;
+}
+
+
+/* Стили для обязательных полей */
+
+.form-group label[for*="customer-name"],
+.form-group label[for*="customer-phone"] {
+    position: relative;
+}
+
+.form-group label[for*="customer-name"]::after,
+.form-group label[for*="customer-phone"]::after {
+    content: "*";
+    color: #ff6b6b;
+    margin-left: 4px;
+}
+
+
+/* Адаптивность для формы */
+
+@media only screen and (max-width: 767px) {
+    .customer-info {
+        margin-top: 15px;
+        padding-top: 15px;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-control {
+        padding: 10px 12px;
+    }
+}
+
+
+/* Стили для успешного оформления заказа */
+
+.order-success {
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.order-success i {
+    font-size: 48px;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+.order-success h4 {
+    color: #242424;
+    margin-bottom: 15px;
+}
+
+.order-success p {
+    color: #5a5a5a;
+    margin-bottom: 20px;
 }
 
 

@@ -49,11 +49,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Обработчик для кнопки оформления заказа
     document.getElementById('checkout-btn').addEventListener('click', function() {
-        if (cart.items.length > 0) {
-            alert('Заказ успешно оформлен! С вами свяжутся для подтверждения.');
-            clearCart();
-            closeCartModal();
+        if (validateCustomerInfo()) {
+            processOrder();
         }
+    });
+
+    // Валидация формы в реальном времени
+    document.getElementById('customer-name').addEventListener('input', function() {
+        validateField(this, 'name-error', validateName);
+    });
+
+    document.getElementById('customer-phone').addEventListener('input', function() {
+        formatPhoneNumber(this);
+        validateField(this, 'phone-error', validatePhone);
+    });
+
+    document.getElementById('customer-email').addEventListener('input', function() {
+        validateField(this, 'email-error', validateEmail);
     });
 });
 
@@ -113,6 +125,7 @@ function updateCartDisplay() {
 // Функция обновления модального окна корзины
 function updateCartModal() {
     const cartItemsContainer = document.getElementById('cart-items');
+    const customerInfo = document.getElementById('customer-info');
     const cartTotalPrice = document.getElementById('cart-total-price');
     const checkoutBtn = document.getElementById('checkout-btn');
 
@@ -122,6 +135,7 @@ function updateCartModal() {
     if (cart.items.length === 0) {
         // Если корзина пуста
         cartItemsContainer.innerHTML = '<p class="empty-cart">Корзина пуста</p>';
+        customerInfo.style.display = 'none';
         checkoutBtn.disabled = true;
     } else {
         // Добавляем товары в корзину
@@ -140,6 +154,9 @@ function updateCartModal() {
             `;
             cartItemsContainer.appendChild(cartItemElement);
         });
+
+        // Показываем форму для данных пользователя
+        customerInfo.style.display = 'block';
 
         // Добавляем обработчики для кнопок удаления
         const removeButtons = document.querySelectorAll('.remove-item');
@@ -161,6 +178,9 @@ function updateCartModal() {
 function openCartModal() {
     document.getElementById('cart-modal').style.display = 'block';
     updateCartModal();
+
+    // Загружаем сохраненные данные пользователя
+    loadCustomerInfo();
 }
 
 // Функция закрытия модального окна корзины
@@ -179,6 +199,29 @@ function loadCartFromStorage() {
     if (savedCart) {
         cart = JSON.parse(savedCart);
         calculateTotal();
+    }
+}
+
+// Функция сохранения данных пользователя
+function saveCustomerInfo() {
+    const customerInfo = {
+        name: document.getElementById('customer-name').value,
+        phone: document.getElementById('customer-phone').value,
+        email: document.getElementById('customer-email').value,
+        requests: document.getElementById('special-requests').value
+    };
+    localStorage.setItem('hotelCustomerInfo', JSON.stringify(customerInfo));
+}
+
+// Функция загрузки данных пользователя
+function loadCustomerInfo() {
+    const savedInfo = localStorage.getItem('hotelCustomerInfo');
+    if (savedInfo) {
+        const customerInfo = JSON.parse(savedInfo);
+        document.getElementById('customer-name').value = customerInfo.name || '';
+        document.getElementById('customer-phone').value = customerInfo.phone || '';
+        document.getElementById('customer-email').value = customerInfo.email || '';
+        document.getElementById('special-requests').value = customerInfo.requests || '';
     }
 }
 
@@ -221,6 +264,190 @@ function showNotification(message) {
             }
         }, 300);
     }, 3000);
+}
+
+// Валидация формы
+function validateCustomerInfo() {
+    const name = document.getElementById('customer-name');
+    const phone = document.getElementById('customer-phone');
+    const email = document.getElementById('customer-email');
+
+    let isValid = true;
+
+    // Валидация имени
+    if (!validateName(name.value)) {
+        showError(name, 'name-error', 'Пожалуйста, введите корректное имя');
+        isValid = false;
+    } else {
+        clearError(name, 'name-error');
+    }
+
+    // Валидация телефона
+    if (!validatePhone(phone.value)) {
+        showError(phone, 'phone-error', 'Пожалуйста, введите корректный номер телефона');
+        isValid = false;
+    } else {
+        clearError(phone, 'phone-error');
+    }
+
+    // Валидация email (необязательное поле)
+    if (email.value && !validateEmail(email.value)) {
+        showError(email, 'email-error', 'Пожалуйста, введите корректный email');
+        isValid = false;
+    } else {
+        clearError(email, 'email-error');
+    }
+
+    return isValid;
+}
+
+// Валидация отдельных полей
+function validateField(field, errorId, validationFunction) {
+    if (validationFunction(field.value)) {
+        clearError(field, errorId);
+    } else {
+        let errorMessage = '';
+        switch (field.id) {
+            case 'customer-name':
+                errorMessage = 'Пожалуйста, введите корректное имя';
+                break;
+            case 'customer-phone':
+                errorMessage = 'Пожалуйста, введите корректный номер телефона';
+                break;
+            case 'customer-email':
+                errorMessage = 'Пожалуйста, введите корректный email';
+                break;
+        }
+        showError(field, errorId, errorMessage);
+    }
+
+    // Сохраняем данные при изменении
+    saveCustomerInfo();
+}
+
+// Функции валидации
+function validateName(name) {
+    return name.trim().length >= 2 && /^[a-zA-Zа-яА-ЯёЁ\s\-]+$/.test(name);
+}
+
+function validatePhone(phone) {
+    const cleanPhone = phone.replace(/\D/g, '');
+    return cleanPhone.length === 11 && /^[78]/.test(cleanPhone);
+}
+
+function validateEmail(email) {
+    if (!email) return true; // Email не обязателен
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Форматирование номера телефона
+function formatPhoneNumber(input) {
+    let value = input.value.replace(/\D/g, '');
+
+    if (value.length === 0) return;
+
+    if (value[0] === '7' || value[0] === '8') {
+        value = value.substring(1);
+    }
+
+    let formattedValue = '+7 (';
+
+    if (value.length > 0) {
+        formattedValue += value.substring(0, 3);
+    }
+    if (value.length > 3) {
+        formattedValue += ') ' + value.substring(3, 6);
+    }
+    if (value.length > 6) {
+        formattedValue += '-' + value.substring(6, 8);
+    }
+    if (value.length > 8) {
+        formattedValue += '-' + value.substring(8, 10);
+    }
+
+    input.value = formattedValue;
+}
+
+// Функции для отображения ошибок
+function showError(field, errorId, message) {
+    field.classList.add('error');
+    document.getElementById(errorId).textContent = message;
+}
+
+function clearError(field, errorId) {
+    field.classList.remove('error');
+    document.getElementById(errorId).textContent = '';
+}
+
+// Обработка заказа
+function processOrder() {
+    const customerInfo = {
+        name: document.getElementById('customer-name').value.trim(),
+        phone: document.getElementById('customer-phone').value,
+        email: document.getElementById('customer-email').value.trim(),
+        requests: document.getElementById('special-requests').value.trim()
+    };
+
+    // Создаем объект заказа
+    const order = {
+        customer: customerInfo,
+        items: cart.items,
+        total: cart.total,
+        orderDate: new Date().toISOString(),
+        orderId: generateOrderId()
+    };
+
+    // Сохраняем заказ
+    saveOrder(order);
+
+    // Показываем подтверждение
+    showOrderConfirmation(order);
+
+    // Очищаем корзину
+    clearCart();
+
+    // Очищаем данные пользователя
+    clearCustomerInfo();
+}
+
+// Генерация ID заказа
+function generateOrderId() {
+    return 'ORD-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+}
+
+// Сохранение заказа
+function saveOrder(order) {
+    const orders = JSON.parse(localStorage.getItem('hotelOrders') || '[]');
+    orders.push(order);
+    localStorage.setItem('hotelOrders', JSON.stringify(orders));
+}
+
+// Показ подтверждения заказа
+function showOrderConfirmation(order) {
+    const cartBody = document.querySelector('.cart-body');
+    cartBody.innerHTML = `
+        <div class="order-success">
+            <div class="success-icon">✓</div>
+            <h4>Заказ успешно оформлен!</h4>
+            <p>Номер вашего заказа: <strong>${order.orderId}</strong></p>
+            <p>С вами свяжутся в ближайшее время для подтверждения бронирования.</p>
+            <p>Сумма заказа: <strong>${order.total} руб.</strong></p>
+            <button class="primary-btn" onclick="closeCartModal()">Понятно</button>
+        </div>
+    `;
+
+    // Скрываем footer корзины
+    document.querySelector('.cart-footer').style.display = 'none';
+}
+
+// Очистка данных пользователя
+function clearCustomerInfo() {
+    document.getElementById('customer-name').value = '';
+    document.getElementById('customer-phone').value = '';
+    document.getElementById('customer-email').value = '';
+    document.getElementById('special-requests').value = '';
+    localStorage.removeItem('hotelCustomerInfo');
 }
 
 // Добавляем стили для уведомления в CSS

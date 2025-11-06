@@ -41,7 +41,7 @@
                     <!-- Иконка корзины с количеством товаров -->
                     <div class="cart-icon">
                         <a href="#" id="cart-link">
-                            <i class="flaticon-023-shopping-bag"></i>
+                            <img src="img/cart.png" alt="Корзина" class="cart-img">
                             <span id="cart-count">0</span>
                         </a>
                     </div>
@@ -67,21 +67,46 @@
                 <h3>Ваша корзина</h3>
                 <span class="close-cart">&times;</span>
             </div>
-            <div class="cart-body">
-                <div id="cart-items">
-                    <!-- Товары будут добавляться сюда динамически -->
-                    <p class="empty-cart">Корзина пуста</p>
+            <form id="order-form">
+                <div class="cart-body">
+                    <div id="cart-items">
+                        <!-- Товары будут добавляться сюда динамически -->
+                        <p class="empty-cart">Корзина пуста</p>
+                    </div>
+
+                    <!-- Форма для данных пользователя -->
+                    <div id="customer-info" class="customer-info" style="display: none;">
+                        <h4>Контактная информация</h4>
+                        <div class="form-group">
+                            <label for="customer-name">Ваше имя *</label>
+                            <input type="text" id="customer-name" name="customer-name" class="form-control" placeholder="Введите ваше имя" required>
+                            <span class="error-message" id="name-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer-phone">Номер телефона *</label>
+                            <input type="tel" id="customer-phone" name="customer-phone" class="form-control" placeholder="+7 (XXX) XXX-XX-XX" required>
+                            <span class="error-message" id="phone-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer-email">Email (необязательно)</label>
+                            <input type="email" id="customer-email" name="customer-email" class="form-control" placeholder="your@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="special-requests">Особые пожелания</label>
+                            <textarea id="special-requests" name="special-requests" class="form-control" placeholder="Дополнительные пожелания к бронированию..." rows="3"></textarea>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="cart-footer">
-                <div class="cart-total">
-                    <strong>Итого: <span id="cart-total-price">0</span> руб.</strong>
+                <div class="cart-footer">
+                    <div class="cart-total">
+                        <strong>Итого: <span id="cart-total-price">0</span> руб.</strong>
+                    </div>
+                    <div class="cart-actions">
+                        <a href="./auth.html" class="primary-btn">Войти</a>
+                        <button type="submit" id="checkout-btn" class="primary-btn" disabled>Оформить заказ</button>
+                    </div>
                 </div>
-                <div class="cart-actions">
-                    <a href="./auth.html" class="primary-btn">Войти</a>
-                    <button id="checkout-btn" class="primary-btn" disabled>Оформить заказ</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 
