@@ -2242,3 +2242,70 @@ ol {
         margin-bottom: 20px;
     }
 }
+.add-testimonial-form {
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 50px;
+}
+
+.add-testimonial-form h3 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.add-testimonial-form input,
+.add-testimonial-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.rating-select {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.rating-select span {
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+.stars input {
+    display: none;
+}
+
+.stars label {
+    font-size: 24px;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.stars input:checked ~ label,
+.stars label:hover,
+.stars label:hover ~ label {
+    color: #ffc107;
+}
+
+.stars input:checked + label {
+    color: #ffc107;
+}
+
+.site-btn {
+    background: #ffc107;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.site-btn:hover {
+    background: #e0a800;
+}
