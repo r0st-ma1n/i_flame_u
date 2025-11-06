@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('img/otellog.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        form {
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 350px;
+            border-radius: 4px;
+            opacity: .9;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        input {
+            display: block;
+            width: 100%;
+            padding: 5px 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            font-weight: bold;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="response.php" method="post">
+        <h1>Авторизация</h1>
+        <label for="username">Логин:</label>
+        <input type="text" name="username" id="username" required>
+        <br>
+        <label for="password">Пароль:</label>
+        <input type="password" name="password" id="password" required>
+        <br>
+        <div style="text-align:center">
+            <button type="submit" name="action" value="login">Авторизация</button>
+            <button type="submit" name="action" value="register">Зарегистрироваться</button>
+            <button type="submit" name="action" value="delete">Удалить аккаунт</button>
+        </div>
+    </form>
+</body>
+
+</html>
