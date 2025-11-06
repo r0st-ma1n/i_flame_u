@@ -16,6 +16,7 @@ const roomPrices = {
 
 // Инициализация корзины при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Cart.js loaded'); // Отладочное сообщение
     loadCartFromStorage();
     updateCartDisplay();
 
@@ -26,18 +27,26 @@ document.addEventListener('DOMContentLoaded', function() {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
                 const roomName = this.closest('.ri-text').querySelector('h2').textContent;
+                console.log('Adding to cart:', roomName); // Отладочное сообщение
                 addToCart(roomName);
             });
         }
     });
 
     // Обработчики для модального окна корзины
-    document.getElementById('cart-link').addEventListener('click', function(e) {
-        e.preventDefault();
-        openCartModal();
-    });
+    const cartLink = document.getElementById('cart-link');
+    if (cartLink) {
+        cartLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Cart link clicked'); // Отладочное сообщение
+            openCartModal();
+        });
+    }
 
-    document.querySelector('.close-cart').addEventListener('click', closeCartModal);
+    const closeCart = document.querySelector('.close-cart');
+    if (closeCart) {
+        closeCart.addEventListener('click', closeCartModal);
+    }
 
     // Закрытие модального окна при клике вне его
     window.addEventListener('click', function(e) {
@@ -47,26 +56,52 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Обработчик для кнопки оформления заказа
-    document.getElementById('checkout-btn').addEventListener('click', function() {
-        if (validateCustomerInfo()) {
-            processOrder();
-        }
-    });
+    // Обработчик для формы заказа - ИСПРАВЛЕННАЯ ВЕРСИЯ
+    const orderForm = document.getElementById('order-form');
+    if (orderForm) {
+        orderForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Предотвращаем стандартную отправку формы
+            console.log('Order form submitted'); // Отладочное сообщение
+            if (validateCustomerInfo()) {
+                processOrder();
+            }
+        });
+    }
+
+    // Обработчик для кнопки оформления заказа (дополнительная защита)
+    const checkoutBtn = document.getElementById('checkout-btn');
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', function(e) {
+            e.preventDefault(); // Предотвращаем стандартное поведение
+            console.log('Checkout button clicked'); // Отладочное сообщение
+            if (validateCustomerInfo()) {
+                processOrder();
+            }
+        });
+    }
 
     // Валидация формы в реальном времени
-    document.getElementById('customer-name').addEventListener('input', function() {
-        validateField(this, 'name-error', validateName);
-    });
+    const customerName = document.getElementById('customer-name');
+    if (customerName) {
+        customerName.addEventListener('input', function() {
+            validateField(this, 'name-error', validateName);
+        });
+    }
 
-    document.getElementById('customer-phone').addEventListener('input', function() {
-        formatPhoneNumber(this);
-        validateField(this, 'phone-error', validatePhone);
-    });
+    const customerPhone = document.getElementById('customer-phone');
+    if (customerPhone) {
+        customerPhone.addEventListener('input', function() {
+            formatPhoneNumber(this);
+            validateField(this, 'phone-error', validatePhone);
+        });
+    }
 
-    document.getElementById('customer-email').addEventListener('input', function() {
-        validateField(this, 'email-error', validateEmail);
-    });
+    const customerEmail = document.getElementById('customer-email');
+    if (customerEmail) {
+        customerEmail.addEventListener('input', function() {
+            validateField(this, 'email-error', validateEmail);
+        });
+    }
 });
 
 // Функция добавления номера в корзину
@@ -116,7 +151,10 @@ function calculateTotal() {
 function updateCartDisplay() {
     // Обновляем счетчик товаров
     const totalItems = cart.items.reduce((sum, item) => sum + item.quantity, 0);
-    document.getElementById('cart-count').textContent = totalItems;
+    const cartCount = document.getElementById('cart-count');
+    if (cartCount) {
+        cartCount.textContent = totalItems;
+    }
 
     // Обновляем содержимое модального окна корзины
     updateCartModal();
@@ -129,14 +167,16 @@ function updateCartModal() {
     const cartTotalPrice = document.getElementById('cart-total-price');
     const checkoutBtn = document.getElementById('checkout-btn');
 
+    if (!cartItemsContainer) return;
+
     // Очищаем контейнер
     cartItemsContainer.innerHTML = '';
 
     if (cart.items.length === 0) {
         // Если корзина пуста
         cartItemsContainer.innerHTML = '<p class="empty-cart">Корзина пуста</p>';
-        customerInfo.style.display = 'none';
-        checkoutBtn.disabled = true;
+        if (customerInfo) customerInfo.style.display = 'none';
+        if (checkoutBtn) checkoutBtn.disabled = true;
     } else {
         // Добавляем товары в корзину
         cart.items.forEach(item => {
@@ -149,14 +189,14 @@ function updateCartModal() {
                 </div>
                 <div class="cart-item-actions">
                     <span>${item.price * item.quantity} руб.</span>
-                    <button class="remove-item" data-room="${item.name}">&times;</button>
+                    <button type="button" class="remove-item" data-room="${item.name}">&times;</button>
                 </div>
             `;
             cartItemsContainer.appendChild(cartItemElement);
         });
 
         // Показываем форму для данных пользователя
-        customerInfo.style.display = 'block';
+        if (customerInfo) customerInfo.style.display = 'block';
 
         // Добавляем обработчики для кнопок удаления
         const removeButtons = document.querySelectorAll('.remove-item');
@@ -167,25 +207,32 @@ function updateCartModal() {
             });
         });
 
-        checkoutBtn.disabled = false;
+        if (checkoutBtn) checkoutBtn.disabled = false;
     }
 
     // Обновляем общую стоимость
-    cartTotalPrice.textContent = cart.total;
+    if (cartTotalPrice) {
+        cartTotalPrice.textContent = cart.total;
+    }
 }
 
 // Функция открытия модального окна корзины
 function openCartModal() {
-    document.getElementById('cart-modal').style.display = 'block';
-    updateCartModal();
-
-    // Загружаем сохраненные данные пользователя
-    loadCustomerInfo();
+    const modal = document.getElementById('cart-modal');
+    if (modal) {
+        modal.style.display = 'block';
+        updateCartModal();
+        // Загружаем сохраненные данные пользователя
+        loadCustomerInfo();
+    }
 }
 
 // Функция закрытия модального окна корзины
 function closeCartModal() {
-    document.getElementById('cart-modal').style.display = 'none';
+    const modal = document.getElementById('cart-modal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
 }
 
 // Функция сохранения корзины в localStorage
@@ -197,18 +244,28 @@ function saveCartToStorage() {
 function loadCartFromStorage() {
     const savedCart = localStorage.getItem('hotelCart');
     if (savedCart) {
-        cart = JSON.parse(savedCart);
-        calculateTotal();
+        try {
+            cart = JSON.parse(savedCart);
+            calculateTotal();
+        } catch (e) {
+            console.error('Error loading cart from storage:', e);
+            cart = { items: [], total: 0 };
+        }
     }
 }
 
 // Функция сохранения данных пользователя
 function saveCustomerInfo() {
+    const nameField = document.getElementById('customer-name');
+    const phoneField = document.getElementById('customer-phone');
+    const emailField = document.getElementById('customer-email');
+    const requestsField = document.getElementById('special-requests');
+
     const customerInfo = {
-        name: document.getElementById('customer-name').value,
-        phone: document.getElementById('customer-phone').value,
-        email: document.getElementById('customer-email').value,
-        requests: document.getElementById('special-requests').value
+        name: nameField ? nameField.value : '',
+        phone: phoneField ? phoneField.value : '',
+        email: emailField ? emailField.value : '',
+        requests: requestsField ? requestsField.value : ''
     };
     localStorage.setItem('hotelCustomerInfo', JSON.stringify(customerInfo));
 }
@@ -217,11 +274,20 @@ function saveCustomerInfo() {
 function loadCustomerInfo() {
     const savedInfo = localStorage.getItem('hotelCustomerInfo');
     if (savedInfo) {
-        const customerInfo = JSON.parse(savedInfo);
-        document.getElementById('customer-name').value = customerInfo.name || '';
-        document.getElementById('customer-phone').value = customerInfo.phone || '';
-        document.getElementById('customer-email').value = customerInfo.email || '';
-        document.getElementById('special-requests').value = customerInfo.requests || '';
+        try {
+            const customerInfo = JSON.parse(savedInfo);
+            const nameField = document.getElementById('customer-name');
+            const phoneField = document.getElementById('customer-phone');
+            const emailField = document.getElementById('customer-email');
+            const requestsField = document.getElementById('special-requests');
+
+            if (nameField) nameField.value = customerInfo.name || '';
+            if (phoneField) phoneField.value = customerInfo.phone || '';
+            if (emailField) emailField.value = customerInfo.email || '';
+            if (requestsField) requestsField.value = customerInfo.requests || '';
+        } catch (e) {
+            console.error('Error loading customer info:', e);
+        }
     }
 }
 
@@ -275,7 +341,8 @@ function validateCustomerInfo() {
     let isValid = true;
 
     // Валидация имени
-    if (!validateName(name.value)) {
+    const nameValue = name ? name.value : '';
+    if (!validateName(nameValue)) {
         showError(name, 'name-error', 'Пожалуйста, введите корректное имя');
         isValid = false;
     } else {
@@ -283,7 +350,8 @@ function validateCustomerInfo() {
     }
 
     // Валидация телефона
-    if (!validatePhone(phone.value)) {
+    const phoneValue = phone ? phone.value : '';
+    if (!validatePhone(phoneValue)) {
         showError(phone, 'phone-error', 'Пожалуйста, введите корректный номер телефона');
         isValid = false;
     } else {
@@ -291,7 +359,8 @@ function validateCustomerInfo() {
     }
 
     // Валидация email (необязательное поле)
-    if (email.value && !validateEmail(email.value)) {
+    const emailValue = email ? email.value : '';
+    if (emailValue && !validateEmail(emailValue)) {
         showError(email, 'email-error', 'Пожалуйста, введите корректный email');
         isValid = false;
     } else {
@@ -303,6 +372,8 @@ function validateCustomerInfo() {
 
 // Валидация отдельных полей
 function validateField(field, errorId, validationFunction) {
+    if (!field) return;
+
     if (validationFunction(field.value)) {
         clearError(field, errorId);
     } else {
@@ -343,6 +414,8 @@ function validateEmail(email) {
 
 // Форматирование номера телефона
 function formatPhoneNumber(input) {
+    if (!input) return;
+
     let value = input.value.replace(/\D/g, '');
 
     if (value.length === 0) return;
@@ -371,32 +444,51 @@ function formatPhoneNumber(input) {
 
 // Функции для отображения ошибок
 function showError(field, errorId, message) {
+    if (!field) return;
+
     field.classList.add('error');
-    document.getElementById(errorId).textContent = message;
+    const errorElement = document.getElementById(errorId);
+    if (errorElement) {
+        errorElement.textContent = message;
+    }
 }
 
 function clearError(field, errorId) {
+    if (!field) return;
+
     field.classList.remove('error');
-    document.getElementById(errorId).textContent = '';
+    const errorElement = document.getElementById(errorId);
+    if (errorElement) {
+        errorElement.textContent = '';
+    }
 }
 
 // Обработка заказа
 function processOrder() {
+    console.log('Processing order...'); // Отладочное сообщение
+
+    const nameField = document.getElementById('customer-name');
+    const phoneField = document.getElementById('customer-phone');
+    const emailField = document.getElementById('customer-email');
+    const requestsField = document.getElementById('special-requests');
+
     const customerInfo = {
-        name: document.getElementById('customer-name').value.trim(),
-        phone: document.getElementById('customer-phone').value,
-        email: document.getElementById('customer-email').value.trim(),
-        requests: document.getElementById('special-requests').value.trim()
+        name: nameField ? nameField.value.trim() : '',
+        phone: phoneField ? phoneField.value : '',
+        email: emailField ? emailField.value.trim() : '',
+        requests: requestsField ? requestsField.value.trim() : ''
     };
 
     // Создаем объект заказа
     const order = {
         customer: customerInfo,
-        items: cart.items,
+        items: [...cart.items], // создаем копию массива
         total: cart.total,
         orderDate: new Date().toISOString(),
         orderId: generateOrderId()
     };
+
+    console.log('Order created:', order); // Отладочное сообщение
 
     // Сохраняем заказ
     saveOrder(order);
@@ -421,11 +513,16 @@ function saveOrder(order) {
     const orders = JSON.parse(localStorage.getItem('hotelOrders') || '[]');
     orders.push(order);
     localStorage.setItem('hotelOrders', JSON.stringify(orders));
+    console.log('Order saved to localStorage'); // Отладочное сообщение
 }
 
 // Показ подтверждения заказа
 function showOrderConfirmation(order) {
+    console.log('Showing order confirmation'); // Отладочное сообщение
+
     const cartBody = document.querySelector('.cart-body');
+    if (!cartBody) return;
+
     cartBody.innerHTML = `
         <div class="order-success">
             <div class="success-icon">✓</div>
@@ -433,39 +530,28 @@ function showOrderConfirmation(order) {
             <p>Номер вашего заказа: <strong>${order.orderId}</strong></p>
             <p>С вами свяжутся в ближайшее время для подтверждения бронирования.</p>
             <p>Сумма заказа: <strong>${order.total} руб.</strong></p>
-            <button class="primary-btn" onclick="closeCartModal()">Понятно</button>
+            <button type="button" class="primary-btn" onclick="closeCartModal()">Понятно</button>
         </div>
     `;
 
     // Скрываем footer корзины
-    document.querySelector('.cart-footer').style.display = 'none';
+    const cartFooter = document.querySelector('.cart-footer');
+    if (cartFooter) {
+        cartFooter.style.display = 'none';
+    }
 }
 
 // Очистка данных пользователя
 function clearCustomerInfo() {
-    document.getElementById('customer-name').value = '';
-    document.getElementById('customer-phone').value = '';
-    document.getElementById('customer-email').value = '';
-    document.getElementById('special-requests').value = '';
+    const nameField = document.getElementById('customer-name');
+    const phoneField = document.getElementById('customer-phone');
+    const emailField = document.getElementById('customer-email');
+    const requestsField = document.getElementById('special-requests');
+
+    if (nameField) nameField.value = '';
+    if (phoneField) phoneField.value = '';
+    if (emailField) emailField.value = '';
+    if (requestsField) requestsField.value = '';
+
     localStorage.removeItem('hotelCustomerInfo');
 }
-
-// Добавляем стили для уведомления в CSS
-const style = document.createElement('style');
-style.textContent = `
-    .notification {
-        animation: slideIn 0.3s ease;
-    }
-    
-    @keyframes slideIn {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-`;
-document.head.appendChild(style);
