@@ -38,6 +38,13 @@
                 </div>
                 <div class="nav-right">
                     <a href="./auth.html" class="primary-btn">Войти</a>
+                    <!-- Иконка корзины с количеством товаров -->
+                    <div class="cart-icon">
+                        <a href="#" id="cart-link">
+                            <i class="flaticon-023-shopping-bag"></i>
+                            <span id="cart-count">0</span>
+                        </a>
+                    </div>
                 </div>
                 <nav class="main-menu mobile-menu">
                     <ul>
@@ -52,6 +59,31 @@
             </div>
         </div>
     </header>
+
+    <!-- Модальное окно корзины -->
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-modal-content">
+            <div class="cart-header">
+                <h3>Ваша корзина</h3>
+                <span class="close-cart">&times;</span>
+            </div>
+            <div class="cart-body">
+                <div id="cart-items">
+                    <!-- Товары будут добавляться сюда динамически -->
+                    <p class="empty-cart">Корзина пуста</p>
+                </div>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <strong>Итого: <span id="cart-total-price">0</span> руб.</strong>
+                </div>
+                <div class="cart-actions">
+                    <a href="./auth.html" class="primary-btn">Войти</a>
+                    <button id="checkout-btn" class="primary-btn" disabled>Оформить заказ</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- картинка на фоне -->
@@ -364,6 +396,7 @@
     <script src="js/jquery.nice-select.min.js"></script>
     <script src="js/jquery.slicknav.js"></script>
     <script src="js/owl.carousel.min.js"></script>
+    <script src="js/cart.js"></script>
     <script src="js/main.js"></script>
 </body>
 
