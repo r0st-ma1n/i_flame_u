@@ -2134,6 +2134,9 @@ ol {
 
 .inner-header .nav-right {
     float: right;
+    display: flex;
+    align-items: center;
+    height: 60px;
 }
 
 .inner-header .main-menu {
@@ -2483,6 +2486,136 @@ textarea.form-control {
     }
     .form-control {
         padding: 10px 12px;
+    }
+}
+
+
+/* ==================== */
+
+
+/* КРАСИВОЕ МЕНЮ ПОЛЬЗОВАТЕЛЯ */
+
+
+/* ==================== */
+
+.user-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.user-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: #F9AD81;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: "Montserrat Alternates", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    max-width: 160px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-btn:hover {
+    background: #ed8a19;
+}
+
+.user-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    min-width: 200px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 8px 0;
+    margin-top: 8px;
+    z-index: 1001;
+    display: none;
+}
+
+.user-dropdown.show {
+    display: block;
+}
+
+.user-info {
+    padding: 12px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 4px;
+}
+
+.user-info strong {
+    display: block;
+    color: #242424;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-info span {
+    font-size: 12px;
+    color: #666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-dropdown a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    color: #242424;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.user-dropdown a:hover {
+    background: #f8f9fa;
+    color: #F9AD81;
+}
+
+.user-dropdown a i {
+    width: 16px;
+    text-align: center;
+}
+
+.logout-btn {
+    color: #dc3545;
+}
+
+.logout-btn:hover {
+    background: #fff5f5;
+    color: #dc3545;
+}
+
+
+/* Адаптивность */
+
+@media only screen and (max-width: 767px) {
+    .user-btn {
+        max-width: 120px;
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+    .user-dropdown {
+        position: fixed;
+        top: 70px;
+        left: 10px;
+        right: 10px;
+        min-width: auto;
     }
 }
 

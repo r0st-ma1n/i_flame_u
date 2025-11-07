@@ -244,3 +244,20 @@ function checkAuthStatus() {
         window.location.href = './index.html';
     }
 }
+
+// После успешного входа или регистрации
+function handleSuccessfulAuth() {
+    // Обновляем интерфейс
+    if (typeof updateUserInterface === 'function') {
+        updateUserInterface();
+    }
+
+    // Перенаправляем на главную
+    setTimeout(() => {
+        window.location.href = './index.html';
+    }, 2000);
+}
+
+// В функциях успешного входа и регистрации замените:
+// Вместо setTimeout с перенаправлением вызывайте:
+// handleSuccessfulAuth();
