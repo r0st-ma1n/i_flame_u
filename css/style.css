@@ -2619,6 +2619,56 @@ textarea.form-control {
     }
 }
 
+.error {
+    border: 1px solid #ff3860 !important;
+}
+
+.error-message {
+    color: #ff3860;
+    font-size: 12px;
+    margin-top: 5px;
+    display: none;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item-info h4 {
+    margin: 0 0 5px 0;
+}
+
+.cart-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.remove-item {
+    background: #ff3860;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.order-success {
+    text-align: center;
+    padding: 20px;
+}
+
+.success-icon {
+    font-size: 48px;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
 
 /* ----------------------------- Responsive Media Styles -----------------------------*/
 

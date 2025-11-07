@@ -3,7 +3,7 @@ class Database {
     private $host = "localhost";
     private $db_name = "hotel_zefir";
     private $username = "root";
-    private $password = "";  // Пароль пустой в XAMPP
+    private $password = "";
     public $conn;
 
     public function getConnection() {
@@ -52,37 +52,28 @@ class User {
         return false;
     }
 
-   public function login($email, $password) {
-    $query = "SELECT id, first_name, last_name, email, phone, password 
-              FROM " . $this->table_name . " 
-              WHERE email = :email LIMIT 1";
-    
-    $stmt = $this->conn->prepare($query);
-    $stmt->bindParam(":email", $email);
-    $stmt->execute();
-    
-    file_put_contents('user_login.log', "Login query for: " . $email . "\n", FILE_APPEND);
-    file_put_contents('user_login.log', "Rows found: " . $stmt->rowCount() . "\n", FILE_APPEND);
-    
-    if($stmt->rowCount() == 1) {
-        $user = $stmt->fetch();
-        file_put_contents('user_login.log', "User found: " . print_r($user, true) . "\n", FILE_APPEND);
+    public function login($email, $password) {
+        $query = "SELECT id, first_name, last_name, email, phone, password 
+                  FROM " . $this->table_name . " 
+                  WHERE email = :email LIMIT 1";
         
-        // Проверяем пароль
-        $password_verified = password_verify($password, $user['password']);
-        file_put_contents('user_login.log', "Password verified: " . ($password_verified ? "YES" : "NO") . "\n", FILE_APPEND);
-        file_put_contents('user_login.log', "Input password: " . $password . "\n", FILE_APPEND);
-        file_put_contents('user_login.log', "Stored hash: " . $user['password'] . "\n", FILE_APPEND);
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":email", $email);
+        $stmt->execute();
         
-        if($password_verified) {
-            // Убираем пароль из результата
-            unset($user['password']);
-            return $user;
+        if($stmt->rowCount() == 1) {
+            $user = $stmt->fetch();
+            
+            // Проверяем пароль
+            if(password_verify($password, $user['password'])) {
+                // Убираем пароль из результата
+                unset($user['password']);
+                return $user;
+            }
         }
+        
+        return false;
     }
-    
-    return false;
-}
 
     public function emailExists($email) {
         $query = "SELECT id FROM " . $this->table_name . " WHERE email = :email";
