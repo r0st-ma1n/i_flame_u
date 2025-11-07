@@ -1,0 +1,90 @@
+Login query for: parshevalexsei@gmail.com
+Rows found: 1
+User found: Array
+(
+    [id] => 2
+    [first_name] => Алексей
+    [last_name] => Паршев
+    [email] => parshevalexsei@gmail.com
+    [phone] => 89128183553
+    [password] => $2y$10$SM7rawRPLxWKNVJemFfBlewc4LxYZ7qg3z.ytfKulNVbOQnm3lZv2
+)
+
+Password verified: YES
+Input password: 123456
+Stored hash: $2y$10$SM7rawRPLxWKNVJemFfBlewc4LxYZ7qg3z.ytfKulNVbOQnm3lZv2
+Login query for: parshevalexsei@gmail.com
+Rows found: 1
+User found: Array
+(
+    [id] => 2
+    [first_name] => Алексей
+    [last_name] => Паршев
+    [email] => parshevalexsei@gmail.com
+    [phone] => 89128183553
+    [password] => $2y$10$SM7rawRPLxWKNVJemFfBlewc4LxYZ7qg3z.ytfKulNVbOQnm3lZv2
+)
+
+Password verified: NO
+Input password: 123455
+Stored hash: $2y$10$SM7rawRPLxWKNVJemFfBlewc4LxYZ7qg3z.ytfKulNVbOQnm3lZv2
+Login query for: parshevalexsei@gmail.com
+Rows found: 1
+User found: Array
+(
+    [id] => 2
+    [first_name] => Алексей
+    [last_name] => Паршев
+    [email] => parshevalexsei@gmail.com
+    [phone] => 89128183553
+    [password] => $2y$10$SM7rawRPLxWKNVJemFfBlewc4LxYZ7qg3z.ytfKulNVbOQnm3lZv2
+)
+
+Password verified: NO
+Input password: 123455
+Stored hash: $2y$10$SM7rawRPLxWKNVJemFfBlewc4LxYZ7qg3z.ytfKulNVbOQnm3lZv2
+Login query for: parshevalexsei@gmail.com
+Rows found: 1
+User found: Array
+(
+    [id] => 2
+    [first_name] => Алексей
+    [last_name] => Паршев
+    [email] => parshevalexsei@gmail.com
+    [phone] => 89128183553
+    [password] => $2y$10$SM7rawRPLxWKNVJemFfBlewc4LxYZ7qg3z.ytfKulNVbOQnm3lZv2
+)
+
+Password verified: NO
+Input password: 123455
+Stored hash: $2y$10$SM7rawRPLxWKNVJemFfBlewc4LxYZ7qg3z.ytfKulNVbOQnm3lZv2
+Login query for: parshevalexsei@gmail.com
+Rows found: 1
+User found: Array
+(
+    [id] => 2
+    [first_name] => Алексей
+    [last_name] => Паршев
+    [email] => parshevalexsei@gmail.com
+    [phone] => 89128183553
+    [password] => $2y$10$SM7rawRPLxWKNVJemFfBlewc4LxYZ7qg3z.ytfKulNVbOQnm3lZv2
+)
+
+Password verified: NO
+Input password: 123455
+Stored hash: $2y$10$SM7rawRPLxWKNVJemFfBlewc4LxYZ7qg3z.ytfKulNVbOQnm3lZv2
+Login query for: parshevalexsei@gmail.com
+Rows found: 1
+User found: Array
+(
+    [id] => 2
+    [first_name] => Алексей
+    [last_name] => Паршев
+    [email] => parshevalexsei@gmail.com
+    [phone] => 89128183553
+    [password] => $2y$10$SM7rawRPLxWKNVJemFfBlewc4LxYZ7qg3z.ytfKulNVbOQnm3lZv2
+)
+
+Password verified: YES
+Input password: 123456
+Stored hash: $2y$10$SM7rawRPLxWKNVJemFfBlewc4LxYZ7qg3z.ytfKulNVbOQnm3lZv2

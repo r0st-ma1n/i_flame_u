@@ -1,0 +1,24 @@
+Login request: 2025-11-07 04:43:31
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Login request: 2025-11-07 04:43:42
+Input: {"email":"parshevalexsei@gmail.com","password":"123455"}
+Attempting login for: parshevalexsei@gmail.com
+Login FAILED for: parshevalexsei@gmail.com
+Login request: 2025-11-07 04:43:43
+Input: {"email":"parshevalexsei@gmail.com","password":"123455"}
+Attempting login for: parshevalexsei@gmail.com
+Login FAILED for: parshevalexsei@gmail.com
+Login request: 2025-11-07 04:43:47
+Input: {"email":"parshevalexsei@gmail.com","password":"123455"}
+Attempting login for: parshevalexsei@gmail.com
+Login FAILED for: parshevalexsei@gmail.com
+Login request: 2025-11-07 04:43:48
+Input: {"email":"parshevalexsei@gmail.com","password":"123455"}
+Attempting login for: parshevalexsei@gmail.com
+Login FAILED for: parshevalexsei@gmail.com
+Login request: 2025-11-07 04:43:52
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com

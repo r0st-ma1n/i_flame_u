@@ -1,6 +1,6 @@
 // Авторизация и регистрация
 $(document).ready(function() {
-    const API_BASE = 'api'; // Путь к API
+    const API_BASE = 'api';
 
     // Переключение между вкладками
     $('.auth-tab').on('click', function() {
@@ -19,6 +19,8 @@ $(document).ready(function() {
 
         const email = $('#loginEmail').val().trim();
         const password = $('#loginPassword').val();
+
+        console.log("Login attempt:", email, password);
 
         if (!validateEmail(email)) {
             showAlert('Пожалуйста, введите корректный email адрес', 'error');
@@ -42,18 +44,29 @@ $(document).ready(function() {
             }),
             contentType: 'application/json',
             success: function(response) {
+                console.log("Login success:", response);
                 showAlert('Вход выполнен успешно!', 'success');
+
                 // Сохраняем данные пользователя
                 localStorage.setItem('user', JSON.stringify(response.user));
                 localStorage.setItem('isLoggedIn', 'true');
 
+                // Перенаправляем на главную через 2 секунды
                 setTimeout(() => {
                     window.location.href = './index.html';
-                }, 1000);
+                }, 2000);
             },
-            error: function(xhr) {
-                const response = JSON.parse(xhr.responseText);
-                showAlert(response.message || 'Ошибка входа', 'error');
+            error: function(xhr, status, error) {
+                console.log("Login error:", xhr.responseText, status, error);
+                let errorMessage = 'Ошибка входа';
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    errorMessage = response.message || errorMessage;
+                } catch (e) {
+                    console.log("JSON parse error:", e);
+                    errorMessage = 'Ошибка сервера';
+                }
+                showAlert(errorMessage, 'error');
             }
         });
     });
@@ -115,21 +128,49 @@ $(document).ready(function() {
             }),
             contentType: 'application/json',
             success: function(response) {
-                showAlert('Регистрация прошла успешно!', 'success');
+                showAlert('Регистрация прошла успешно! Автоматический вход...', 'success');
 
-                setTimeout(() => {
-                    $('.auth-tab').removeClass('active');
-                    $('.auth-form').removeClass('active');
-                    $('.auth-tab[data-tab="login"]').addClass('active');
-                    $('#login').addClass('active');
-                    $('#loginEmail').val(email);
+                // Автоматически логиним пользователя после регистрации
+                $.ajax({
+                    url: `${API_BASE}/login.php`,
+                    type: 'POST',
+                    data: JSON.stringify({
+                        email: email,
+                        password: password
+                    }),
+                    contentType: 'application/json',
+                    success: function(loginResponse) {
+                        // Сохраняем данные пользователя
+                        localStorage.setItem('user', JSON.stringify(loginResponse.user));
+                        localStorage.setItem('isLoggedIn', 'true');
 
-                    $('#registerForm')[0].reset();
-                }, 1500);
+                        // Перенаправляем на главную через 2 секунды
+                        setTimeout(() => {
+                            window.location.href = './index.html';
+                        }, 2000);
+                    },
+                    error: function() {
+                        // Если авто-логин не удался, просто переключаем на вкладку входа
+                        showAlert('Регистрация успешна! Теперь войдите в систему.', 'success');
+                        setTimeout(() => {
+                            $('.auth-tab').removeClass('active');
+                            $('.auth-form').removeClass('active');
+                            $('.auth-tab[data-tab="login"]').addClass('active');
+                            $('#login').addClass('active');
+                            $('#loginEmail').val(email);
+                        }, 2000);
+                    }
+                });
             },
             error: function(xhr) {
-                const response = JSON.parse(xhr.responseText);
-                showAlert(response.message || 'Ошибка регистрации', 'error');
+                let errorMessage = 'Ошибка регистрации';
+                try {
+                    const response = JSON.parse(xhr.responseText);
+                    errorMessage = response.message || errorMessage;
+                } catch (e) {
+                    // Если не JSON, используем стандартное сообщение
+                }
+                showAlert(errorMessage, 'error');
             }
         });
     });
@@ -163,6 +204,7 @@ $(document).ready(function() {
 
     // Функция показа уведомлений
     function showAlert(message, type = 'info') {
+        // Удаляем предыдущие уведомления
         $('.auth-alert').remove();
 
         const alertClass = type === 'error' ? 'alert-danger' :
@@ -171,7 +213,7 @@ $(document).ready(function() {
 
         const alert = $(`
             <div class="alert ${alertClass} auth-alert alert-dismissible fade show" role="alert">
-                ${message}
+                <strong>${type === 'error' ? 'Ошибка!' : type === 'success' ? 'Успех!' : 'Информация'}</strong> ${message}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -180,8 +222,25 @@ $(document).ready(function() {
 
         $('.auth-form-content').prepend(alert);
 
-        setTimeout(() => {
-            alert.alert('close');
-        }, 5000);
+        // Для успешных сообщений не закрываем автоматически
+        if (type !== 'success') {
+            setTimeout(() => {
+                alert.alert('close');
+            }, 5000);
+        }
     }
+
+    // Проверяем если пользователь уже авторизован
+    checkAuthStatus();
 });
+
+// Проверка статуса авторизации
+function checkAuthStatus() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+    if (isLoggedIn === 'true' && user.name) {
+        // Если пользователь уже авторизован, перенаправляем на главную
+        window.location.href = './index.html';
+    }
+}

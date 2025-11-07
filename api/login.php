@@ -1,45 +1,80 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
-header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-include_once '../config/database.php';
-include_once '../models/User.php';
+// Логируем запрос
+file_put_contents('login_debug.log', "Login request: " . date('Y-m-d H:i:s') . "\n", FILE_APPEND);
 
-$database = new Database();
-$db = $database->getConnection();
-
-$user = new User($db);
-
-$data = json_decode(file_get_contents("php://input"));
-
-if(!empty($data->email) && !empty($data->password)) {
-    $user->email = $data->email;
-    $password = $data->password;
-
-    if($user->login($password)) {
-        session_start();
-        $_SESSION['user_id'] = $user->id;
-        $_SESSION['user_name'] = $user->first_name . ' ' . $user->last_name;
-        $_SESSION['user_email'] = $user->email;
-
-        http_response_code(200);
-        echo json_encode(array(
-            "message" => "Успешный вход в систему.",
-            "user" => array(
-                "id" => $user->id,
-                "name" => $user->first_name . ' ' . $user->last_name,
-                "email" => $user->email
-            )
-        ));
-    } else {
-        http_response_code(401);
-        echo json_encode(array("message" => "Ошибка входа. Неверный email или пароль."));
+try {
+    include_once '../config/database.php';
+    
+    $database = new Database();
+    $db = $database->getConnection();
+    
+    if(!$db) {
+        throw new Exception("Не удалось подключиться к базе данных");
     }
-} else {
-    http_response_code(400);
-    echo json_encode(array("message" => "Невозможно выполнить вход. Данные неполные."));
+    
+    $user = new User($db);
+    
+    $input = file_get_contents("php://input");
+    file_put_contents('login_debug.log', "Input: " . $input . "\n", FILE_APPEND);
+    
+    if(empty($input)) {
+        throw new Exception("Пустой запрос");
+    }
+    
+    $data = json_decode($input);
+    
+    if(!$data) {
+        throw new Exception("Неверный JSON формат");
+    }
+    
+    if(empty($data->email) || empty($data->password)) {
+        http_response_code(400);
+        echo json_encode(["message" => "Email и пароль обязательны"]);
+        exit;
+    }
+    
+    $email = trim($data->email);
+    $password = $data->password;
+    
+    file_put_contents('login_debug.log', "Attempting login for: " . $email . "\n", FILE_APPEND);
+    
+    $user_data = $user->login($email, $password);
+    
+    if($user_data) {
+        file_put_contents('login_debug.log', "Login SUCCESS for: " . $email . "\n", FILE_APPEND);
+        
+        http_response_code(200);
+        echo json_encode([
+            "message" => "Успешный вход в систему",
+            "user" => [
+                "id" => $user_data['id'],
+                "name" => $user_data['first_name'] . ' ' . $user_data['last_name'],
+                "email" => $user_data['email'],
+                "first_name" => $user_data['first_name'],
+                "last_name" => $user_data['last_name']
+            ]
+        ]);
+    } else {
+        file_put_contents('login_debug.log', "Login FAILED for: " . $email . "\n", FILE_APPEND);
+        
+        http_response_code(401);
+        echo json_encode(["message" => "Неверный email или пароль"]);
+    }
+    
+} catch(Exception $e) {
+    file_put_contents('login_debug.log', "Login ERROR: " . $e->getMessage() . "\n", FILE_APPEND);
+    
+    http_response_code(500);
+    echo json_encode([
+        "message" => "Ошибка сервера: " . $e->getMessage()
+    ]);
 }
 ?>
