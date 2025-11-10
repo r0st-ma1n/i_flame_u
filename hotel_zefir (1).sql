@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Ноя 07 2025 г., 08:17
+-- Время создания: Ноя 10 2025 г., 11:18
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -54,6 +54,24 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `CalculateOrderTotal` (`order_id` INT
     WHERE ci.order_id = order_id;
     
     RETURN COALESCE(total_amount, 0);
+END$$
+
+CREATE DEFINER=`root`@`localhost` FUNCTION `IncrementLoginCount` (`user_id` INT) RETURNS INT(11) DETERMINISTIC READS SQL DATA BEGIN
+    DECLARE current_count INT;
+    
+    -- Вставляем или обновляем запись
+    INSERT INTO user_login_stats (user_id, login_count, last_login) 
+    VALUES (user_id, 1, NOW())
+    ON DUPLICATE KEY UPDATE 
+        login_count = login_count + 1,
+        last_login = NOW();
+    
+    -- Получаем текущее количество
+    SELECT login_count INTO current_count 
+    FROM user_login_stats 
+    WHERE user_id = user_id;
+    
+    RETURN current_count;
 END$$
 
 DELIMITER ;
@@ -177,6 +195,9 @@ CREATE TABLE `users` (
   `last_name` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `phone` varchar(20) DEFAULT NULL,
+  `birthdate` date DEFAULT NULL,
+  `country` varchar(100) DEFAULT NULL,
+  `address` text DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -186,10 +207,65 @@ CREATE TABLE `users` (
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `phone`, `password`, `created_at`, `updated_at`) VALUES
-(1, 'Test', 'User', 'test1762485063@test.com', '1234567890', '$2y$10$WZLRZPkQT3u5mq8Z9Ae6zO2Pu8SCN8z6Pbf90.CEltD2yw7j0slv2', '2025-11-07 03:11:03', '2025-11-07 03:11:03'),
-(3, 'Test', 'User', 'test1762486645@test.com', '1234567890', '$2y$10$8r6fF9nObmeDYHDt17beo.GQSnk0IbyzJ13QhBbwdMKjKopw6I0JC', '2025-11-07 03:37:25', '2025-11-07 03:37:25'),
-(6, 'Тест', 'Тестов', 'test@test.com', '1234567890', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '2025-11-07 07:05:47', '2025-11-07 07:05:47');
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `phone`, `birthdate`, `country`, `address`, `password`, `created_at`, `updated_at`) VALUES
+(1, 'Test', 'User', 'test1762485063@test.com', '1234567890', NULL, NULL, NULL, '$2y$10$WZLRZPkQT3u5mq8Z9Ae6zO2Pu8SCN8z6Pbf90.CEltD2yw7j0slv2', '2025-11-07 03:11:03', '2025-11-07 03:11:03'),
+(3, 'Test', 'User', 'test1762486645@test.com', '1234567890', NULL, NULL, NULL, '$2y$10$8r6fF9nObmeDYHDt17beo.GQSnk0IbyzJ13QhBbwdMKjKopw6I0JC', '2025-11-07 03:37:25', '2025-11-07 03:37:25'),
+(6, 'Тест', 'Тестов', 'test@test.com', '1234567890', NULL, NULL, NULL, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '2025-11-07 07:05:47', '2025-11-07 07:05:47'),
+(11, 'ввввв', 'ввввввв', 'parslexsei@gmail.com', '89128185858', NULL, NULL, NULL, '$2y$10$fZvZN7.55D0oajdR64izzONmBll8NGUhKSSowUppMivSGY06BY1KS', '2025-11-10 09:56:51', '2025-11-10 09:56:51');
+
+--
+-- Триггеры `users`
+--
+DELIMITER $$
+CREATE TRIGGER `after_user_insert` AFTER INSERT ON `users` FOR EACH ROW BEGIN
+    INSERT INTO user_audit_log (user_id, action, changed_fields, changed_at)
+    VALUES (NEW.id, 'CREATE', 
+            CONCAT('first_name:', NEW.first_name, ';',
+                   'last_name:', NEW.last_name, ';',
+                   'email:', NEW.email, ';',
+                   'phone:', NEW.phone),
+            NOW());
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `after_user_update` AFTER UPDATE ON `users` FOR EACH ROW BEGIN
+    INSERT INTO user_audit_log (user_id, action, changed_fields, changed_at)
+    VALUES (NEW.id, 'UPDATE', 
+            CONCAT('first_name:', OLD.first_name, '->', NEW.first_name, ';',
+                   'last_name:', OLD.last_name, '->', NEW.last_name, ';',
+                   'email:', OLD.email, '->', NEW.email, ';',
+                   'phone:', OLD.phone, '->', NEW.phone),
+            NOW());
+END
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `user_audit_log`
+--
+
+CREATE TABLE `user_audit_log` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `action` varchar(50) NOT NULL,
+  `changed_fields` text DEFAULT NULL,
+  `changed_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `user_login_stats`
+--
+
+CREATE TABLE `user_login_stats` (
+  `user_id` int(11) NOT NULL,
+  `login_count` int(11) DEFAULT 1,
+  `last_login` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Индексы сохранённых таблиц
@@ -223,6 +299,19 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `email` (`email`);
 
 --
+-- Индексы таблицы `user_audit_log`
+--
+ALTER TABLE `user_audit_log`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Индексы таблицы `user_login_stats`
+--
+ALTER TABLE `user_login_stats`
+  ADD PRIMARY KEY (`user_id`);
+
+--
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
@@ -248,7 +337,13 @@ ALTER TABLE `rooms`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT для таблицы `user_audit_log`
+--
+ALTER TABLE `user_audit_log`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -260,6 +355,18 @@ ALTER TABLE `users`
 ALTER TABLE `cart_items`
   ADD CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
   ADD CONSTRAINT `cart_items_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`);
+
+--
+-- Ограничения внешнего ключа таблицы `user_audit_log`
+--
+ALTER TABLE `user_audit_log`
+  ADD CONSTRAINT `user_audit_log_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `user_login_stats`
+--
+ALTER TABLE `user_login_stats`
+  ADD CONSTRAINT `user_login_stats_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -48,26 +48,27 @@ try {
     
     $user_data = $user->login($email, $password);
     
+   // В login.php после успешной авторизации добавляем:
     if($user_data) {
-        file_put_contents('login_debug.log', "Login SUCCESS for: " . $email . "\n", FILE_APPEND);
-        
-        http_response_code(200);
-        echo json_encode([
-            "message" => "Успешный вход в систему",
-            "user" => [
-                "id" => $user_data['id'],
-                "name" => $user_data['first_name'] . ' ' . $user_data['last_name'],
-                "email" => $user_data['email'],
-                "first_name" => $user_data['first_name'],
-                "last_name" => $user_data['last_name']
-            ]
-        ]);
-    } else {
-        file_put_contents('login_debug.log', "Login FAILED for: " . $email . "\n", FILE_APPEND);
-        
-        http_response_code(401);
-        echo json_encode(["message" => "Неверный email или пароль"]);
-    }
+    // Увеличиваем счетчик авторизаций
+    $query = "SELECT IncrementLoginCount(:user_id) as login_count";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(":user_id", $user_data['id']);
+    $stmt->execute();
+    $login_count = $stmt->fetch(PDO::FETCH_ASSOC)['login_count'];
+    
+    // РЕДИРЕКТИМ НА СТРАНИЦУ УСПЕХА С ДАННЫМИ В URL
+    $redirect_url = "login-success.html?name=" . urlencode($user_data['first_name'] . ' ' . $user_data['last_name']) . 
+                   "&email=" . urlencode($user_data['email']) . 
+                   "&count=" . $login_count;
+    
+    echo json_encode([
+        "message" => "Успешный вход в систему",
+        "login_count" => $login_count,
+        "redirect_url" => $redirect_url,
+        "user" => $user_data
+    ]);
+}
     
 } catch(Exception $e) {
     file_put_contents('login_debug.log', "Login ERROR: " . $e->getMessage() . "\n", FILE_APPEND);

@@ -234,6 +234,63 @@ function checkProtectedPageAccess() {
     return true;
 }
 
+// В функции обработки успешного входа в user.js
+function handleLoginSuccess(response) {
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('user', JSON.stringify(response.user));
+
+    // ПЕРЕХОДИМ НА СТРАНИЦУ УСПЕХА
+    window.location.href = response.redirect_url;
+}
+
+// Функция для показа уведомления об авторизации
+function showLoginNotification(userName, loginCount) {
+    const notification = $(`
+        <div class="login-notification">
+            <div class="notification-content">
+                <i class="fa fa-check-circle"></i>
+                <div>
+                    <strong>Добро пожаловать, ${userName}!</strong>
+                    <br>
+                    <small>Это ваша ${loginCount}-я авторизация</small>
+                </div>
+            </div>
+        </div>
+    `);
+
+    $('body').append(notification);
+
+    // Стили для уведомления
+    notification.css({
+        'position': 'fixed',
+        'top': '20px',
+        'right': '20px',
+        'padding': '20px',
+        'border-radius': '10px',
+        'background': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        'color': 'white',
+        'font-weight': '500',
+        'z-index': '10000',
+        'max-width': '300px',
+        'box-shadow': '0 10px 30px rgba(0,0,0,0.3)',
+        'transform': 'translateX(400px)',
+        'transition': 'transform 0.3s ease'
+    });
+
+    // Анимация
+    setTimeout(() => {
+        notification.css('transform', 'translateX(0)');
+    }, 100);
+
+    // Авто-закрытие через 5 секунд
+    setTimeout(() => {
+        notification.css('transform', 'translateX(400px)');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 5000);
+}
+
 // Инициализация проверок при загрузке
 $(document).ready(function() {
     checkAuthStatus();

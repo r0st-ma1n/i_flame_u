@@ -24,3 +24,51 @@ Login request: 2025-11-07 08:15:14
 Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
 Attempting login for: parshevalexsei@gmail.com
 Login SUCCESS for: parshevalexsei@gmail.com
+Login request: 2025-11-10 10:10:00
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login FAILED for: parshevalexsei@gmail.com
+Login request: 2025-11-10 10:10:30
+Input: {"email":"test@test.com","password":"password"}
+Attempting login for: test@test.com
+Login SUCCESS for: test@test.com
+Login request: 2025-11-10 10:27:59
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Login request: 2025-11-10 10:28:17
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Login request: 2025-11-10 10:54:05
+Input: {"email":"pukikaki@gmail.com","password":"123456"}
+Attempting login for: pukikaki@gmail.com
+Login SUCCESS for: pukikaki@gmail.com
+Login request: 2025-11-10 10:56:51
+Input: {"email":"parslexsei@gmail.com","password":"123456"}
+Attempting login for: parslexsei@gmail.com
+Login SUCCESS for: parslexsei@gmail.com
+Login request: 2025-11-10 11:06:21
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com (Login #1)
+Login request: 2025-11-10 11:08:53
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com (Login #2)
+Login request: 2025-11-10 11:09:41
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com (Login #3)
+Login request: 2025-11-10 11:12:28
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login request: 2025-11-10 11:14:18
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login request: 2025-11-10 11:15:48
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login request: 2025-11-10 11:17:48
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
