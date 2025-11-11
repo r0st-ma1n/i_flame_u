@@ -506,3 +506,54 @@ Login request: 2025-11-11 07:55:25
 Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
 Attempting login for: parshevalexsei@gmail.com
 Login SUCCESS for: parshevalexsei@gmail.com
+Login request: 2025-11-11 07:59:53
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Login request: 2025-11-11 08:00:05
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Login request: 2025-11-11 08:03:17
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Login request: 2025-11-11 08:03:27
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Login request: 2025-11-11 08:12:01
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Login count for user 14: 1
+Login request: 2025-11-11 08:12:11
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Login count for user 14: 2
+Login request: 2025-11-11 08:12:23
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Login count for user 14: 3
+Login request: 2025-11-11 08:12:38
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Login count for user 14: 4
+Login request: 2025-11-11 08:12:49
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Login count for user 14: 5
+Login request: 2025-11-11 08:16:37
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Login count for user 14: 6
+Login request: 2025-11-11 08:17:00
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Login count for user 14: 7

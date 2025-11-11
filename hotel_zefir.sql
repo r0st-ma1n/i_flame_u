@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Ноя 10 2025 г., 11:18
+-- Время создания: Ноя 11 2025 г., 08:17
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -56,20 +56,25 @@ CREATE DEFINER=`root`@`localhost` FUNCTION `CalculateOrderTotal` (`order_id` INT
     RETURN COALESCE(total_amount, 0);
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `IncrementLoginCount` (`user_id` INT) RETURNS INT(11) DETERMINISTIC READS SQL DATA BEGIN
+CREATE DEFINER=`root`@`localhost` FUNCTION `IncrementLoginCount` (`p_user_id` INT) RETURNS INT(11) DETERMINISTIC READS SQL DATA BEGIN
     DECLARE current_count INT;
     
-    -- Вставляем или обновляем запись
+    -- Логируем вызов
+    INSERT INTO debug_logs (message) VALUES (CONCAT('Function called with user_id: ', p_user_id));
+    
+    -- Простая и надежная вставка/обновление
     INSERT INTO user_login_stats (user_id, login_count, last_login) 
-    VALUES (user_id, 1, NOW())
+    VALUES (p_user_id, 1, NOW())
     ON DUPLICATE KEY UPDATE 
         login_count = login_count + 1,
         last_login = NOW();
     
-    -- Получаем текущее количество
+    -- Логируем результат
+    INSERT INTO debug_logs (message) VALUES ('After INSERT/UPDATE');
+    
     SELECT login_count INTO current_count 
     FROM user_login_stats 
-    WHERE user_id = user_id;
+    WHERE user_id = p_user_id;
     
     RETURN current_count;
 END$$
@@ -137,6 +142,40 @@ CREATE TRIGGER `UpdateOrderTotalAfterCartChange` AFTER INSERT ON `cart_items` FO
 END
 $$
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `debug_logs`
+--
+
+CREATE TABLE `debug_logs` (
+  `id` int(11) NOT NULL,
+  `message` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Дамп данных таблицы `debug_logs`
+--
+
+INSERT INTO `debug_logs` (`id`, `message`, `created_at`) VALUES
+(1, 'Function called with user_id: 1', '2025-11-11 07:05:43'),
+(2, 'After INSERT/UPDATE', '2025-11-11 07:05:43'),
+(3, 'Function called with user_id: 14', '2025-11-11 07:12:01'),
+(4, 'After INSERT/UPDATE', '2025-11-11 07:12:01'),
+(5, 'Function called with user_id: 14', '2025-11-11 07:12:12'),
+(6, 'After INSERT/UPDATE', '2025-11-11 07:12:12'),
+(7, 'Function called with user_id: 14', '2025-11-11 07:12:23'),
+(8, 'After INSERT/UPDATE', '2025-11-11 07:12:23'),
+(9, 'Function called with user_id: 14', '2025-11-11 07:12:38'),
+(10, 'After INSERT/UPDATE', '2025-11-11 07:12:38'),
+(11, 'Function called with user_id: 14', '2025-11-11 07:12:49'),
+(12, 'After INSERT/UPDATE', '2025-11-11 07:12:49'),
+(13, 'Function called with user_id: 14', '2025-11-11 07:16:37'),
+(14, 'After INSERT/UPDATE', '2025-11-11 07:16:37'),
+(15, 'Function called with user_id: 14', '2025-11-11 07:17:01'),
+(16, 'After INSERT/UPDATE', '2025-11-11 07:17:01');
 
 -- --------------------------------------------------------
 
@@ -211,7 +250,8 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `phone`, `birthda
 (1, 'Test', 'User', 'test1762485063@test.com', '1234567890', NULL, NULL, NULL, '$2y$10$WZLRZPkQT3u5mq8Z9Ae6zO2Pu8SCN8z6Pbf90.CEltD2yw7j0slv2', '2025-11-07 03:11:03', '2025-11-07 03:11:03'),
 (3, 'Test', 'User', 'test1762486645@test.com', '1234567890', NULL, NULL, NULL, '$2y$10$8r6fF9nObmeDYHDt17beo.GQSnk0IbyzJ13QhBbwdMKjKopw6I0JC', '2025-11-07 03:37:25', '2025-11-07 03:37:25'),
 (6, 'Тест', 'Тестов', 'test@test.com', '1234567890', NULL, NULL, NULL, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '2025-11-07 07:05:47', '2025-11-07 07:05:47'),
-(11, 'ввввв', 'ввввввв', 'parslexsei@gmail.com', '89128185858', NULL, NULL, NULL, '$2y$10$fZvZN7.55D0oajdR64izzONmBll8NGUhKSSowUppMivSGY06BY1KS', '2025-11-10 09:56:51', '2025-11-10 09:56:51');
+(13, 'Алексей', 'Паршев', 'abc@mail.ru', '89128183553', NULL, NULL, NULL, '$2y$10$BcKtNv7MIGwbfLSmLJOVY.BggSDz.3ZvXGJCd2FOMsK6g2niL6MCW', '2025-11-10 11:18:49', '2025-11-10 11:18:49'),
+(14, 'Алексей', 'Паршев', 'parshevalexsei@gmail.com', '89128183553', NULL, NULL, NULL, '$2y$10$yRIp6bn11X53BRFeC8.Kp.J3TepIxpDUIDtJzEMl.54PYJ9pJwG8C', '2025-11-11 05:37:26', '2025-11-11 05:37:26');
 
 --
 -- Триггеры `users`
@@ -255,6 +295,14 @@ CREATE TABLE `user_audit_log` (
   `changed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Дамп данных таблицы `user_audit_log`
+--
+
+INSERT INTO `user_audit_log` (`id`, `user_id`, `action`, `changed_fields`, `changed_at`) VALUES
+(11, 13, 'CREATE', 'first_name:Алексей;last_name:Паршев;email:abc@mail.ru;phone:89128183553', '2025-11-10 11:18:49'),
+(12, 14, 'CREATE', 'first_name:Алексей;last_name:Паршев;email:parshevalexsei@gmail.com;phone:89128183553', '2025-11-11 05:37:26');
+
 -- --------------------------------------------------------
 
 --
@@ -268,6 +316,14 @@ CREATE TABLE `user_login_stats` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Дамп данных таблицы `user_login_stats`
+--
+
+INSERT INTO `user_login_stats` (`user_id`, `login_count`, `last_login`) VALUES
+(1, 2, '2025-11-11 07:05:43'),
+(14, 7, '2025-11-11 07:17:01');
+
+--
 -- Индексы сохранённых таблиц
 --
 
@@ -278,6 +334,12 @@ ALTER TABLE `cart_items`
   ADD PRIMARY KEY (`cart_item_id`),
   ADD KEY `order_id` (`order_id`),
   ADD KEY `room_id` (`room_id`);
+
+--
+-- Индексы таблицы `debug_logs`
+--
+ALTER TABLE `debug_logs`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `orders`
@@ -322,6 +384,12 @@ ALTER TABLE `cart_items`
   MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT для таблицы `debug_logs`
+--
+ALTER TABLE `debug_logs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
@@ -337,13 +405,13 @@ ALTER TABLE `rooms`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT для таблицы `user_audit_log`
 --
 ALTER TABLE `user_audit_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

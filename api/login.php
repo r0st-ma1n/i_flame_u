@@ -51,22 +51,33 @@ try {
     if($user_data) {
         file_put_contents('login_debug.log', "Login SUCCESS for: " . $email . "\n", FILE_APPEND);
         
+        // ВЫЗОВ ФУНКЦИИ ПОДСЧЕТА АВТОРИЗАЦИЙ - ДОБАВЛЕНО
+        $user_id = $user_data['id'];
+        $login_count = incrementLoginCount($db, $user_id);
+        
+        file_put_contents('login_debug.log', "Login count for user {$user_id}: {$login_count}\n", FILE_APPEND);
+        
         http_response_code(200);
         echo json_encode([
             "message" => "Успешный вход в систему",
+            "success" => true,
             "user" => [
                 "id" => $user_data['id'],
                 "name" => $user_data['first_name'] . ' ' . $user_data['last_name'],
                 "email" => $user_data['email'],
                 "first_name" => $user_data['first_name'],
                 "last_name" => $user_data['last_name']
-            ]
+            ],
+            "login_count" => $login_count  // ДОБАВЛЕНО
         ]);
     } else {
         file_put_contents('login_debug.log', "Login FAILED for: " . $email . "\n", FILE_APPEND);
         
         http_response_code(401);
-        echo json_encode(["message" => "Неверный email или пароль"]);
+        echo json_encode([
+            "message" => "Неверный email или пароль",
+            "success" => false
+        ]);
     }
     
 } catch(Exception $e) {
@@ -74,7 +85,24 @@ try {
     
     http_response_code(500);
     echo json_encode([
-        "message" => "Ошибка сервера: " . $e->getMessage()
+        "message" => "Ошибка сервера: " . $e->getMessage(),
+        "success" => false
     ]);
+}
+
+// ФУНКЦИЯ ПОДСЧЕТА АВТОРИЗАЦИЙ - ДОБАВЛЕНО
+function incrementLoginCount($db, $user_id) {
+    try {
+        $query = "SELECT IncrementLoginCount(:user_id) as login_count";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(":user_id", $user_id);
+        $stmt->execute();
+        
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['login_count'];
+    } catch(Exception $e) {
+        file_put_contents('login_debug.log', "Error in incrementLoginCount: " . $e->getMessage() . "\n", FILE_APPEND);
+        return 1; // Возвращаем 1 в случае ошибки
+    }
 }
 ?>
