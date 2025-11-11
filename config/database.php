@@ -23,6 +23,11 @@ class Database {
     }
 }
 
+function getPDO() {
+    $database = new Database();
+    return $database->getConnection();
+}
+
 class User {
     private $conn;
     private $table_name = "users";

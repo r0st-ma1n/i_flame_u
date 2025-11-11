@@ -1,0 +1,521 @@
+<?php
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Детальная отладка
+error_log("=== PROFILE.PHP DEBUG ===");
+error_log("Session ID: " . session_id());
+error_log("All Session Data: " . print_r($_SESSION, true));
+error_log("Cookies: " . print_r($_COOKIE, true));
+
+require_once 'config/database.php';
+
+if (!isset($_SESSION['user_id'])) {
+    error_log("REDIRECT: user_id not found in session");
+    error_log("Available session keys: " . implode(', ', array_keys($_SESSION)));
+    header('Location: login.php');
+    exit;
+}
+
+$user_id = $_SESSION['user_id'];
+error_log("SUCCESS: User ID found: " . $user_id);
+?>
+
+    <!DOCTYPE html>
+    <html lang="zxx">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Hotel Template">
+        <meta name="keywords" content="Hotel, unica, creative, html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Профиль - Зефир</title>
+
+        <!-- Шрифты от гугла -->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+        <!-- Css стили -->
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="css/flaticon.css" type="text/css">
+        <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+        <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+        <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+        <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+        <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+        <link rel="stylesheet" href="css/style.css" type="text/css">
+        <style>
+            /* Дополнительные стили для профиля */
+            
+            .profile-form select.form-control {
+                height: 46px;
+                line-height: 46px;
+                padding: 12px 15px;
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23353535' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+                background-repeat: no-repeat;
+                background-position: right 15px center;
+                background-size: 16px;
+                padding-right: 40px;
+            }
+            
+            .profile-form select.form-control:focus {
+                border-color: #F9AD81;
+                outline: none;
+                box-shadow: 0 0 0 2px rgba(249, 173, 129, 0.2);
+            }
+            
+            .profile-form option {
+                padding: 12px 15px;
+                line-height: 1.4;
+            }
+        </style>
+    </head>
+
+    <body>
+         <script>
+        const CURRENT_USER_ID = <?php echo $user_id; ?>;
+    </script>
+        <div id="preloder">
+            <div class="loader"></div>
+        </div>
+
+        <!-- Верхний баннер-->
+        <header class="header-section">
+            <div class="container-fluid">
+                <div class="inner-header">
+                    <div class="logo">
+                        <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                    </div>
+                    <div class="nav-right">
+                        <!-- Меню пользователя -->
+                        <div class="user-menu">
+                            <button class="user-btn">
+                            <i class="fa fa-user"></i>
+                            <span id="user-name">Иван Иванов</span>
+                        </button>
+                            <div class="user-dropdown">
+                                <div class="user-info">
+                                    <strong id="dropdown-user-name">Иван Иванов</strong>
+                                    <span id="dropdown-user-email">ivan@example.com</span>
+                                </div>
+                                <a href="./profile.html"><i class="fa fa-user-circle"></i> Мой профиль</a>
+                                <a href="./my-bookings.html"><i class="fa fa-calendar-check-o"></i> Мои бронирования</a>
+                                <a href="#" class="logout-btn" id="logoutBtn"><i class="fa fa-sign-out"></i> Выйти</a>
+                            </div>
+                        </div>
+                        <!-- Корзина -->
+                        <div class="cart-icon">
+                            <a href="#" id="cart-link">
+                                <img src="img/cart.png" alt="Cart" class="cart-img">
+                                <span id="cart-count">0</span>
+                            </a>
+                        </div>
+                    </div>
+                    <nav class="main-menu mobile-menu">
+                        <ul>
+                            <li><a href="./index.html">Главная</a></li>
+                            <li><a href="./about-us.html">О нас</a></li>
+                            <li><a href="rooms.html">Комнаты</a></li>
+                            <li><a href="services.html">Сервис</a></li>
+                            <li class="active"><a href="./profile.html">Профиль</a></li>
+                            <li><a href="./contact.html">Контакты</a></li>
+                        </ul>
+                    </nav>
+                    <div id="mobile-menu-wrap"></div>
+                </div>
+            </div>
+        </header>
+
+
+        <!-- Профиль пользователя -->
+        <section class="profile-section spad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-title">
+                            <span>ЛИЧНЫЙ КАБИНЕТ</span>
+                            <h2>Мой профиль</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="profile-sidebar">
+                            <div class="profile-avatar">
+                                <img src="img/profile-avatar.jpg" alt="Аватар пользователя">
+                                <div class="avatar-upload">
+                                    <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+                                    <label for="avatar-upload" class="avatar-upload-btn">
+                                    <i class="fa fa-camera"></i> Изменить фото
+                                </label>
+                                </div>
+                            </div>
+                            <div class="profile-stats">
+                                <div class="stat-item">
+                                    <h4>12</h4>
+                                    <p>Бронирований</p>
+                                </div>
+                                <div class="stat-item">
+                                    <h4>45</h4>
+                                    <p>Ночей в отеле</p>
+                                </div>
+                                <div class="stat-item">
+                                    <h4>VIP</h4>
+                                    <p>Статус</p>
+                                </div>
+                            </div>
+                            <div class="profile-menu">
+                                <a href="#" class="profile-menu-item active" data-tab="personal-info">
+                                    <i class="fa fa-user"></i> Личная информация
+                                </a>
+                                <a href="#" class="profile-menu-item" data-tab="bookings">
+                                    <i class="fa fa-calendar"></i> Мои бронирования
+                                </a>
+                                <a href="#" class="profile-menu-item" data-tab="preferences">
+                                    <i class="fa fa-cog"></i> Предпочтения
+                                </a>
+                                <a href="#" class="profile-menu-item" data-tab="security">
+                                    <i class="fa fa-lock"></i> Безопасность
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="profile-content">
+                            <!-- Личная информация -->
+                            <div class="profile-tab active" id="personal-info-tab">
+                                <h3>Личная информация</h3>
+                                <form class="profile-form" action="../api/save_profile.php" method="POST">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="first-name">Имя</label>
+                                                <input type="text" id="first-name" class="form-control" value="Иван">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="last-name">Фамилия</label>
+                                                <input type="text" id="last-name" class="form-control" value="Иванов">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="email">Электронная почта</label>
+                                                <input type="email" id="email" class="form-control" value="ivan@example.com">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="phone">Телефон</label>
+                                                <input type="tel" id="phone" class="form-control" value="+7 (912) 345-67-89">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="birthdate">Дата рождения</label>
+                                                <input type="date" id="birthdate" class="form-control" value="1990-05-15">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="country">Страна</label>
+                                                <select id="country" class="form-control">
+                                                <option value="RU" selected>Россия</option>
+                                                <option value="KZ">Казахстан</option>
+                                                <option value="BY">Беларусь</option>
+                                                <option value="UA">Украина</option>
+                                                <option value="AM">Армения</option>
+                                                <option value="GE">Грузия</option>
+                                                <option value="AZ">Азербайджан</option>
+                                            </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Адрес</label>
+                                        <input type="text" id="address" class="form-control" value="г. Москва, ул. Примерная, д. 123">
+                                    </div>
+                                    <button type="submit" class="primary-btn">Сохранить изменения</button>
+                                </form>
+                            </div>
+
+                            <!-- Мои бронирования -->
+                            <div class="profile-tab" id="bookings-tab">
+                                <h3>Мои бронирования</h3>
+                                <div class="booking-list">
+                                    <div class="booking-item">
+                                        <div class="booking-header">
+                                            <h4>Королевский Люкс</h4>
+                                            <span class="booking-status confirmed">Подтверждено</span>
+                                        </div>
+                                        <div class="booking-details">
+                                            <div class="booking-date">
+                                                <i class="fa fa-calendar"></i> 15.05.2023 - 20.05.2023
+                                            </div>
+                                            <div class="booking-guests">
+                                                <i class="fa fa-users"></i> 2 взрослых
+                                            </div>
+                                            <div class="booking-price">
+                                                <i class="fa fa-ruble"></i> 45,000
+                                            </div>
+                                        </div>
+                                        <div class="booking-actions">
+                                            <button class="primary-btn small">Детали</button>
+                                            <button class="primary-btn outline small">Отменить</button>
+                                        </div>
+                                    </div>
+                                    <div class="booking-item">
+                                        <div class="booking-header">
+                                            <h4>Двухместный Номер</h4>
+                                            <span class="booking-status completed">Завершено</span>
+                                        </div>
+                                        <div class="booking-details">
+                                            <div class="booking-date">
+                                                <i class="fa fa-calendar"></i> 10.03.2023 - 12.03.2023
+                                            </div>
+                                            <div class="booking-guests">
+                                                <i class="fa fa-users"></i> 2 взрослых, 1 ребенок
+                                            </div>
+                                            <div class="booking-price">
+                                                <i class="fa fa-ruble"></i> 18,500
+                                            </div>
+                                        </div>
+                                        <div class="booking-actions">
+                                            <button class="primary-btn small">Детали</button>
+                                            <button class="primary-btn outline small">Оставить отзыв</button>
+                                        </div>
+                                    </div>
+                                    <div class="booking-item">
+                                        <div class="booking-header">
+                                            <h4>Одноместный Номер</h4>
+                                            <span class="booking-status pending">Ожидание</span>
+                                        </div>
+                                        <div class="booking-details">
+                                            <div class="booking-date">
+                                                <i class="fa fa-calendar"></i> 25.06.2023 - 28.06.2023
+                                            </div>
+                                            <div class="booking-guests">
+                                                <i class="fa fa-users"></i> 1 взрослый
+                                            </div>
+                                            <div class="booking-price">
+                                                <i class="fa fa-ruble"></i> 12,000
+                                            </div>
+                                        </div>
+                                        <div class="booking-actions">
+                                            <button class="primary-btn small">Детали</button>
+                                            <button class="primary-btn outline small">Отменить</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Предпочтения -->
+                            <div class="profile-tab" id="preferences-tab">
+                                <h3>Предпочтения</h3>
+                                <form class="profile-form" action="../api/save_profile.php" method="POST">
+                                    <div class="preference-section">
+                                        <h4>Предпочтения по номеру</h4>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Тип номера</label>
+                                                    <div class="preference-options">
+                                                        <div class="preference-option">
+                                                            <input type="checkbox" id="room-type-lux" checked>
+                                                            <label for="room-type-lux">Люкс</label>
+                                                        </div>
+                                                        <div class="preference-option">
+                                                            <input type="checkbox" id="room-type-double">
+                                                            <label for="room-type-double">Двухместный</label>
+                                                        </div>
+                                                        <div class="preference-option">
+                                                            <input type="checkbox" id="room-type-single">
+                                                            <label for="room-type-single">Одноместный</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Особые пожелания</label>
+                                                    <div class="preference-options">
+                                                        <div class="preference-option">
+                                                            <input type="checkbox" id="pref-non-smoking" checked>
+                                                            <label for="pref-non-smoking">Номер для некурящих</label>
+                                                        </div>
+                                                        <div class="preference-option">
+                                                            <input type="checkbox" id="pref-high-floor">
+                                                            <label for="pref-high-floor">Высокий этаж</label>
+                                                        </div>
+                                                        <div class="preference-option">
+                                                            <input type="checkbox" id="pref-quiet">
+                                                            <label for="pref-quiet">Тихий номер</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="preference-section">
+                                        <h4>Дополнительные услуги</h4>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <div class="preference-options">
+                                                        <div class="preference-option">
+                                                            <input type="checkbox" id="service-spa" checked>
+                                                            <label for="service-spa">Спа-услуги</label>
+                                                        </div>
+                                                        <div class="preference-option">
+                                                            <input type="checkbox" id="service-breakfast">
+                                                            <label for="service-breakfast">Завтрак в номер</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <div class="preference-options">
+                                                        <div class="preference-option">
+                                                            <input type="checkbox" id="service-transport">
+                                                            <label for="service-transport">Трансфер</label>
+                                                        </div>
+                                                        <div class="preference-option">
+                                                            <input type="checkbox" id="service-parking">
+                                                            <label for="service-parking">Парковка</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="primary-btn">Сохранить предпочтения</button>
+                                </form>
+                            </div>
+
+                            <!-- Безопасность -->
+                            <div class="profile-tab" id="security-tab">
+                                <h3>Безопасность</h3>
+                                <form class="profile-form" action="../api/save_profile.php" method="POST">
+                                    <div class="form-group">
+                                        <label for="current-password">Текущий пароль</label>
+                                        <input type="password" id="current-password" class="form-control">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="new-password">Новый пароль</label>
+                                                <input type="password" id="new-password" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="confirm-password">Подтвердите пароль</label>
+                                                <input type="password" id="confirm-password" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="primary-btn">Изменить пароль</button>
+                                </form>
+                                <div class="security-section">
+                                    <h4>Двухфакторная аутентификация</h4>
+                                    <p>Добавьте дополнительный уровень безопасности к своей учетной записи, включив двухфакторную аутентификацию.</p>
+                                    <div class="two-factor-toggle">
+                                        <span>Включить двухфакторную аутентификацию</span>
+                                        <label class="switch">
+                                        <input type="checkbox">
+                                        <span class="slider round"></span>
+                                    </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Низ страницы -->
+        <footer class="footer-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="footer-item">
+                            <div class="footer-logo">
+                                <a href="#"><img src="img/logo.png" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="footer-item">
+                            <h5>Новостная рассылка</h5>
+                            <div class="newslatter-form">
+                                <input type="text" placeholder="Электронная почта">
+                                <button type="submit">Подписаться</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="footer-item">
+                            <h5>Контакты</h5>
+                            <ul>
+                                <li><img src="img/placeholder.png" alt="">г. Тюмень, ул. М.Горького 44/2, 2 этаж</li>
+                                <li><img src="img/phone.png" alt="">+7(3452)66-21-41</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul>
+                                <li><a href="./index.html">Главная</a></li>
+                                <li><a href="./about-us.html">О нас</a></li>
+                                <li><a href="./rooms.html">Комнаты</a></li>
+                                <li><a href="./services.html">Удобства</a></li>
+                                <li><a href="./profile.html">Профиль</a></li>
+                                <li><a href="./contact.html">Контакты</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row pt-5">
+                        <div class="col-lg-12 ">
+                            <div class="small text-white text-center">
+                                Copyright &copy;
+                                <script>
+                                    document.write(new Date().getFullYear());
+                                </script> All rights reserved | Разработано <i class="fa fa-heart-o" aria-hidden="true"></i> <a href="https://vk.com/rost" target="_blank">Имангуловым Рустемом</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Js плагины -->
+        <script src="js/jquery-3.3.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.magnific-popup.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+        <script src="js/jquery.nice-select.min.js"></script>
+        <script src="js/jquery.slicknav.js"></script>
+        <script src="js/owl.carousel.min.js"></script>
+        <script src="js/cart.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/user.js"></script>
+        <script src="js/profile.js"></script>
+    </body>
+
+    </html>

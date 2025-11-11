@@ -19,35 +19,19 @@ $(document).ready(function() {
 
     // Функция загрузки данных пользователя
     function loadUserData() {
-        console.log('1. Запуск loadUserData()');
-
-        // Получаем user_id из localStorage
-        const user = JSON.parse(localStorage.getItem('user') || '{}');
-        const user_id = user.id || 1;
-
-        const formData = {
-            action: 'get_profile_data',
-            user_id: user_id
-        };
-
-        console.log('2. Отправка запроса на:', 'api/save_profile.php');
-        console.log('3. Данные запроса:', formData);
+        console.log('2. Отправка запроса на: api/save_profile.php');
 
         $.ajax({
             url: 'api/save_profile.php',
             type: 'POST',
-            data: JSON.stringify(formData),
-            contentType: 'application/json',
+            data: { action: 'get_profile_data' }, // убрали user_id
             dataType: 'json',
             success: function(response) {
-                console.log('4. УСПЕХ: Получен ответ от сервера:', response);
-
-                if (response.success && response.user) {
-                    console.log('5. Данные пользователя получены:', response.user);
-                    fillProfileForm(response.user);
+                console.log('4. УСПЕХ AJAX:', response);
+                if (response.success) {
+                    displayUserData(response.user);
                 } else {
-                    console.log('5. ОШИБКА: Неверный формат ответа:', response);
-                    showNotification('Не удалось загрузить данные профиля', 'error');
+                    showNotification('error', 'Ошибка при загрузке данных: ' + response.message);
                 }
             },
             error: function(xhr, status, error) {
@@ -56,14 +40,26 @@ $(document).ready(function() {
                 console.log('   - Error:', error);
                 console.log('   - XHR:', xhr);
                 console.log('   - Response Text:', xhr.responseText);
-
-                let errorMsg = 'Ошибка при загрузке данных: ' + error;
-                if (xhr.responseText) {
-                    errorMsg += '\nОтвет сервера: ' + xhr.responseText.substring(0, 200);
-                }
-                showNotification(errorMsg, 'error');
+                showNotification('error', 'Ошибка соединения с сервером: ' + error);
             }
         });
+    }
+
+    function displayUserData(user) {
+        console.log('5. Отображение данных пользователя:', user);
+
+        $('#first-name').val(user.first_name || '');
+        $('#last-name').val(user.last_name || '');
+        $('#email').val(user.email || '');
+        $('#phone').val(user.phone || '');
+        $('#birthdate').val(user.birthdate || ''); // ДОБАВЬТЕ
+        $('#country').val(user.country || 'RU'); // ДОБАВЬТЕ
+        $('#address').val(user.address || ''); // ДОБАВЬТЕ
+
+        // Также обновите данные в шапке
+        $('#user-name').text(user.first_name + ' ' + user.last_name);
+        $('#dropdown-user-name').text(user.first_name + ' ' + user.last_name);
+        $('#dropdown-user-email').text(user.email);
     }
 
     // Функция заполнения формы данными пользователя
@@ -237,29 +233,29 @@ $(document).ready(function() {
     });
 
     // Функция для отправки данных на сервер
-    function saveProfileData(data) {
-        console.log('14. Отправка данных на сервер:', data);
-
-        // Добавляем user_id ко всем запросам
-        const user = JSON.parse(localStorage.getItem('user') || '{}');
-        data.user_id = user.id || 1;
+    function saveProfileData(formData) {
+        console.log('14. Отправка данных на сервер:', formData);
 
         $.ajax({
             url: 'api/save_profile.php',
             type: 'POST',
-            data: JSON.stringify(data),
-            contentType: 'application/json',
+            data: formData,
             dataType: 'json',
             success: function(response) {
-                console.log('15. УСПЕХ сохранения:', response);
-
+                console.log('15. Ответ сервера:', response);
                 if (response.success) {
-                    showNotification(response.message, 'success');
-                    if (data.first_name && data.last_name && data.email) {
-                        updateHeaderInfo(data.first_name, data.last_name, data.email);
-                    }
+                    showNotification('Данные успешно сохранены!');
+
+                    setTimeout(() => {
+                        showNotification('Триггер на сохранение данных сработал');
+                    }, 1200);
+
+                    setTimeout(() => {
+                        showNotification('Триггер на логирование изменений сработал');
+                    }, 2400);
+                    loadUserData();
                 } else {
-                    showNotification(response.message, 'error');
+                    showNotification('Ошибка сохранения: ' + response.message);
                 }
             },
             error: function(xhr, status, error) {
@@ -268,18 +264,13 @@ $(document).ready(function() {
                 console.log('   - Error:', error);
                 console.log('   - XHR:', xhr);
                 console.log('   - Response Text:', xhr.responseText);
-
-                let errorMsg = 'Ошибка соединения с сервером: ' + error;
-                if (xhr.responseText) {
-                    errorMsg += '\nОтвет: ' + xhr.responseText.substring(0, 200);
-                }
-                showNotification(errorMsg, 'error');
+                showNotification('error', 'Ошибка соединения с сервером: ' + error);
             }
         });
     }
 
     // Функция для показа уведомлений
-    function showNotification(message, type = 'success') {
+    function showNotification(message, type = 'УСПЕШНО') {
         console.log('16. Показ уведомления:', type, message);
 
         const notification = $('<div class="notification"></div>');
@@ -301,7 +292,7 @@ $(document).ready(function() {
             'transition': 'transform 0.3s ease'
         });
 
-        if (type === 'success') {
+        if (type === 'Успешно') {
             notification.css('background-color', '#4CAF50');
         } else if (type === 'error') {
             notification.css('background-color', '#f44336');

@@ -1,559 +1,212 @@
-Login request: 2025-11-07 08:02:03
-Login request: 2025-11-07 08:06:03
-Login request: 2025-11-07 08:06:04
-Login request: 2025-11-07 08:06:04
-Login request: 2025-11-07 08:06:05
-Login request: 2025-11-07 08:06:05
-Login request: 2025-11-07 08:06:07
-Login request: 2025-11-07 08:06:07
-Login request: 2025-11-07 08:06:07
-Login request: 2025-11-07 08:06:09
-Login request: 2025-11-07 08:07:01
+Login request: 2025-11-11 08:47:20
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Login count for user 14: 10
+Login request: 2025-11-11 08:48:44
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Login count for user 14: 11
+Login request: 2025-11-11 08:53:20
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Login count for user 14: 12
+Login request: 2025-11-11 09:01:25
+Session ID at start: 472s56tr7dl4g94b7788n7t83r
+Session data before login: Array
+(
+)
+
+Input: {"email":"parshevalexsei@gmail.com1","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com1
+Login FAILED for: parshevalexsei@gmail.com1
+Login request: 2025-11-11 09:01:30
+Session ID at start: 472s56tr7dl4g94b7788n7t83r
+Session data before login: Array
+(
+)
+
+Input: {"email":"parshevalexsei@gmail.com1","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com1
+Login FAILED for: parshevalexsei@gmail.com1
+Login request: 2025-11-11 09:01:35
+Session ID at start: 472s56tr7dl4g94b7788n7t83r
+Session data before login: Array
+(
+)
+
+Input: {"email":"parshevalexsei@gmail.com1","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com1
+Login FAILED for: parshevalexsei@gmail.com1
+Login request: 2025-11-11 09:01:38
+Session ID at start: 472s56tr7dl4g94b7788n7t83r
+Session data before login: Array
+(
+)
+
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Session data after login: Array
+(
+    [user_id] => 14
+    [user_email] => parshevalexsei@gmail.com
+    [user_name] => Алексей Паршев
+    [logged_in] => 1
+)
+
+Login count for user 14: 13
+Login response sent successfully
+Login request: 2025-11-11 09:08:03
+Session ID at start: 472s56tr7dl4g94b7788n7t83r
+Session data before login: Array
+(
+    [test_user_id] => 14
+    [test_email] => test@example.com
+    [debug_test] => test_value_1762848435
+    [debug_user_id] => 999
+)
+
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Session data after login: Array
+(
+    [test_user_id] => 14
+    [test_email] => test@example.com
+    [debug_test] => test_value_1762848435
+    [debug_user_id] => 999
+    [user_id] => 14
+    [user_email] => parshevalexsei@gmail.com
+    [user_name] => Алексей Паршев
+    [logged_in] => 1
+)
+
+Login count for user 14: 14
+Login response sent successfully
+Login request: 2025-11-11 09:13:14
+Session ID at start: 472s56tr7dl4g94b7788n7t83r
+Session data before login: Array
+(
+    [test_user_id] => 14
+    [test_email] => test@example.com
+    [debug_test] => test_value_1762848435
+    [debug_user_id] => 999
+    [user_id] => 14
+    [user_email] => parshevalexsei@gmail.com
+    [user_name] => Алексей Паршев
+    [logged_in] => 1
+)
+
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login SUCCESS for: parshevalexsei@gmail.com
+Session data after login: Array
+(
+    [test_user_id] => 14
+    [test_email] => test@example.com
+    [debug_test] => test_value_1762848435
+    [debug_user_id] => 999
+    [user_id] => 14
+    [user_email] => parshevalexsei@gmail.com
+    [user_name] => Алексей Паршев
+    [logged_in] => 1
+)
+
+Login count for user 14: 15
+Login response sent successfully
+Login request: 2025-11-11 09:16:45
+Session ID at start: 472s56tr7dl4g94b7788n7t83r
+Session data before login: Array
+(
+    [test_user_id] => 14
+    [test_email] => test@example.com
+    [debug_test] => test_value_1762848435
+    [debug_user_id] => 999
+    [user_id] => 14
+    [user_email] => parshevalexsei@gmail.com
+    [user_name] => Алексей Паршев
+    [logged_in] => 1
+)
+
+Input: {"email":"asda@gmail.com","password":"123456"}
+Attempting login for: asda@gmail.com
+Login SUCCESS for: asda@gmail.com
+Session data after login: Array
+(
+    [test_user_id] => 14
+    [test_email] => test@example.com
+    [debug_test] => test_value_1762848435
+    [debug_user_id] => 999
+    [user_id] => 15
+    [user_email] => asda@gmail.com
+    [user_name] => Алекс Парш
+    [logged_in] => 1
+)
+
+Login count for user 15: 1
+Login response sent successfully
+Login request: 2025-11-11 09:36:44
+Session ID at start: 472s56tr7dl4g94b7788n7t83r
+Session data before login: Array
+(
+    [test_user_id] => 14
+    [test_email] => test@example.com
+    [debug_test] => test_value_1762848435
+    [debug_user_id] => 999
+    [user_id] => 15
+    [user_email] => asda@gmail.com
+    [user_name] => Алекс Парш
+    [logged_in] => 1
+)
+
 Input: {"email":"test@test.com","password":"password"}
 Attempting login for: test@test.com
 Login SUCCESS for: test@test.com
-Login request: 2025-11-07 08:07:38
-Input: {"email":"testiiiing@mail.ru","password":"123456"}
-Attempting login for: testiiiing@mail.ru
-Login SUCCESS for: testiiiing@mail.ru
-Login request: 2025-11-07 08:15:04
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login FAILED for: parshevalexsei@gmail.com
-Login request: 2025-11-07 08:15:14
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-10 10:10:00
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login FAILED for: parshevalexsei@gmail.com
-Login request: 2025-11-10 10:10:30
+Session data after login: Array
+(
+    [test_user_id] => 14
+    [test_email] => test@example.com
+    [debug_test] => test_value_1762848435
+    [debug_user_id] => 999
+    [user_id] => 6
+    [user_email] => test@test.com
+    [user_name] => Тест Тестов
+    [logged_in] => 1
+)
+
+Login count for user 6: 1
+Login response sent successfully
+Login request: 2025-11-11 09:37:18
+Session ID at start: 472s56tr7dl4g94b7788n7t83r
+Session data before login: Array
+(
+    [test_user_id] => 14
+    [test_email] => test@example.com
+    [debug_test] => test_value_1762848435
+    [debug_user_id] => 999
+    [user_id] => 6
+    [user_email] => test@test.com
+    [user_name] => Тест Тестов
+    [logged_in] => 1
+)
+
 Input: {"email":"test@test.com","password":"password"}
 Attempting login for: test@test.com
 Login SUCCESS for: test@test.com
-Login request: 2025-11-10 10:27:59
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-10 10:28:17
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-10 10:54:05
-Input: {"email":"pukikaki@gmail.com","password":"123456"}
-Attempting login for: pukikaki@gmail.com
-Login SUCCESS for: pukikaki@gmail.com
-Login request: 2025-11-10 10:56:51
-Input: {"email":"parslexsei@gmail.com","password":"123456"}
-Attempting login for: parslexsei@gmail.com
-Login SUCCESS for: parslexsei@gmail.com
-Login request: 2025-11-10 11:06:21
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com (Login #1)
-Login request: 2025-11-10 11:08:53
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com (Login #2)
-Login request: 2025-11-10 11:09:41
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com (Login #3)
-Login request: 2025-11-10 11:12:28
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login request: 2025-11-10 11:14:18
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login request: 2025-11-10 11:15:48
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login request: 2025-11-10 11:17:48
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login request: 2025-11-10 12:02:03
-Input: {"email":"test@test.com","password":"123456"}
-Attempting login for: test@test.com
-Login request: 2025-11-10 12:02:15
-Input: {"email":"test@test.com","password":"password"}
-Attempting login for: test@test.com
-Login request: 2025-11-10 12:03:51
-Input: {"email":"test@test.com","password":"password3"}
-Attempting login for: test@test.com
-Login request: 2025-11-10 12:06:46
-Login ERROR: Database connection error: SQLSTATE[HY000] [2002] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение
-Login request: 2025-11-10 12:06:58
-Input: {"email":"test@test.com","password":"password"}
-Attempting login for: test@test.com
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-Login request: 2025-11-10 12:06:59
-Input: {"email":"test@test.com","password":"password"}
-Attempting login for: test@test.com
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-Login request: 2025-11-10 12:07:06
-Input: {"email":"test@test.com","password":"password"}
-Attempting login for: test@test.com
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-Login request: 2025-11-10 12:07:07
-Input: {"email":"test@test.com","password":"password"}
-Attempting login for: test@test.com
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-Login request: 2025-11-10 12:07:24
-Input: {"email":"test@test.com","password":"password"}
-Attempting login for: test@test.com
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-Login request: 2025-11-10 12:10:26
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-Login request: 2025-11-10 12:10:37
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-Login request: 2025-11-10 12:12:43
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-User data result: Array
+Session data after login: Array
 (
-    [id] => 12
-    [first_name] => Алексей
-    [last_name] => Паршев
-    [email] => parshevalexsei@gmail.com
-    [phone] => 89128183553
+    [test_user_id] => 14
+    [test_email] => test@example.com
+    [debug_test] => test_value_1762848435
+    [debug_user_id] => 999
+    [user_id] => 6
+    [user_email] => test@test.com
+    [user_name] => Макс Тестов
+    [logged_in] => 1
 )
 
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-User data result: Array
-(
-    [id] => 13
-    [first_name] => Алексей
-    [last_name] => Паршев
-    [email] => abc@mail.ru
-    [phone] => 89128183553
-)
-
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-User data result: Array
-(
-    [id] => 13
-    [first_name] => Алексей
-    [last_name] => Паршев
-    [email] => abc@mail.ru
-    [phone] => 89128183553
-)
-
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-User data result: Array
-(
-    [id] => 13
-    [first_name] => Алексей
-    [last_name] => Паршев
-    [email] => abc@mail.ru
-    [phone] => 89128183553
-)
-
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-User data result: Array
-(
-    [id] => 13
-    [first_name] => Алексей
-    [last_name] => Паршев
-    [email] => abc@mail.ru
-    [phone] => 89128183553
-)
-
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-User data result: Array
-(
-    [id] => 13
-    [first_name] => Алексей
-    [last_name] => Паршев
-    [email] => abc@mail.ru
-    [phone] => 89128183553
-)
-
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-User data result: Array
-(
-    [id] => 13
-    [first_name] => Алексей
-    [last_name] => Паршев
-    [email] => abc@mail.ru
-    [phone] => 89128183553
-)
-
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-User data result: Array
-(
-    [id] => 13
-    [first_name] => Алексей
-    [last_name] => Паршев
-    [email] => abc@mail.ru
-    [phone] => 89128183553
-)
-
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-User data result: Array
-(
-    [id] => 13
-    [first_name] => Алексей
-    [last_name] => Паршев
-    [email] => abc@mail.ru
-    [phone] => 89128183553
-)
-
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-User data result: Array
-(
-    [id] => 13
-    [first_name] => Алексей
-    [last_name] => Паршев
-    [email] => abc@mail.ru
-    [phone] => 89128183553
-)
-
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-User data result: Array
-(
-    [id] => 13
-    [first_name] => Алексей
-    [last_name] => Паршев
-    [email] => abc@mail.ru
-    [phone] => 89128183553
-)
-
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-User data result: Array
-(
-    [id] => 13
-    [first_name] => Алексей
-    [last_name] => Паршев
-    [email] => abc@mail.ru
-    [phone] => 89128183553
-)
-
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-User data result: Array
-(
-    [id] => 13
-    [first_name] => Алексей
-    [last_name] => Паршев
-    [email] => abc@mail.ru
-    [phone] => 89128183553
-)
-
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-User data result: Array
-(
-    [id] => 13
-    [first_name] => Алексей
-    [last_name] => Паршев
-    [email] => abc@mail.ru
-    [phone] => 89128183553
-)
-
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-User data result: Array
-(
-    [id] => 13
-    [first_name] => Алексей
-    [last_name] => Паршев
-    [email] => abc@mail.ru
-    [phone] => 89128183553
-)
-
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-User data result: Array
-(
-    [id] => 13
-    [first_name] => Алексей
-    [last_name] => Паршев
-    [email] => abc@mail.ru
-    [phone] => 89128183553
-)
-
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-User data result: Array
-(
-    [id] => 14
-    [first_name] => Алексей
-    [last_name] => Паршев
-    [email] => parshevalexsei@gmail.com
-    [phone] => 89128183553
-)
-
-Login ERROR: SQLSTATE[42000]: Syntax error or access violation: 1172 Result consisted of more than one row
-Login request: 2025-11-11 07:24:50
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:24:58
-Login request: 2025-11-11 07:24:58
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:25:33
-Login request: 2025-11-11 07:25:33
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:26:12
-Login request: 2025-11-11 07:26:12
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:26:18
-Login request: 2025-11-11 07:26:18
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:30:23
-Login request: 2025-11-11 07:30:23
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:30:24
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:30:25
-Login request: 2025-11-11 07:30:25
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:30:25
-Login request: 2025-11-11 07:30:25
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:30:25
-Login request: 2025-11-11 07:30:25
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:30:25
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:30:25
-Login request: 2025-11-11 07:30:25
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:30:25
-Login request: 2025-11-11 07:30:25
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:30:26
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:30:26
-Login request: 2025-11-11 07:30:26
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:30:26
-Login request: 2025-11-11 07:30:26
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:30:26
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:30:26
-Login request: 2025-11-11 07:30:26
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:30:26
-Login request: 2025-11-11 07:30:26
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:30:27
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:30:27
-Login request: 2025-11-11 07:30:27
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:30:27
-Login request: 2025-11-11 07:30:27
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:30:27
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:30:27
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:35:32
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:35:37
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:41:26
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:41:29
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:41:30
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:41:31
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:41:36
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:43:12
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:50:38
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:50:56
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:51:07
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:55:25
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 07:59:53
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 08:00:05
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 08:03:17
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 08:03:27
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login request: 2025-11-11 08:12:01
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login count for user 14: 1
-Login request: 2025-11-11 08:12:11
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login count for user 14: 2
-Login request: 2025-11-11 08:12:23
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login count for user 14: 3
-Login request: 2025-11-11 08:12:38
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login count for user 14: 4
-Login request: 2025-11-11 08:12:49
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login count for user 14: 5
-Login request: 2025-11-11 08:16:37
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login count for user 14: 6
-Login request: 2025-11-11 08:17:00
-Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
-Attempting login for: parshevalexsei@gmail.com
-Login SUCCESS for: parshevalexsei@gmail.com
-Login count for user 14: 7
+Login count for user 6: 2
+Login response sent successfully

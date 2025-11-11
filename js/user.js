@@ -42,7 +42,7 @@ function updateUIForLoggedInUser(user) {
                         <strong>${user.first_name || user.name} ${user.last_name || ''}</strong>
                         <span>${user.email}</span>
                     </div>
-                    <a href="profile.html" class="dropdown-item">
+                    <a href="profile.php" class="dropdown-item">
                         <i class="fa fa-user-circle"></i>Профиль
                     </a>
                     <a href="bookings.html" class="dropdown-item">
@@ -126,7 +126,7 @@ function logoutUser() {
     setTimeout(() => {
         updateUIForGuest();
 
-        if (window.location.pathname.includes('profile.html') ||
+        if (window.location.pathname.includes('profile.php') ||
             window.location.pathname.includes('bookings.html')) {
             window.location.href = './index.html';
         }
@@ -238,7 +238,7 @@ function updateUserInterface() {
 // Проверка доступа к защищенным страницам
 function checkProtectedPageAccess() {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    const protectedPages = ['profile.html', 'bookings.html'];
+    const protectedPages = ['profile.php', 'bookings.html'];
     const currentPage = window.location.pathname.split('/').pop();
 
     if (protectedPages.includes(currentPage) && !isLoggedIn) {

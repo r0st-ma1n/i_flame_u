@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Ноя 11 2025 г., 08:17
+-- Время создания: Ноя 11 2025 г., 10:07
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.2.12
 
@@ -175,7 +175,29 @@ INSERT INTO `debug_logs` (`id`, `message`, `created_at`) VALUES
 (13, 'Function called with user_id: 14', '2025-11-11 07:16:37'),
 (14, 'After INSERT/UPDATE', '2025-11-11 07:16:37'),
 (15, 'Function called with user_id: 14', '2025-11-11 07:17:01'),
-(16, 'After INSERT/UPDATE', '2025-11-11 07:17:01');
+(16, 'After INSERT/UPDATE', '2025-11-11 07:17:01'),
+(17, 'Function called with user_id: 14', '2025-11-11 07:42:23'),
+(18, 'After INSERT/UPDATE', '2025-11-11 07:42:23'),
+(19, 'Function called with user_id: 14', '2025-11-11 07:45:35'),
+(20, 'After INSERT/UPDATE', '2025-11-11 07:45:35'),
+(21, 'Function called with user_id: 14', '2025-11-11 07:47:20'),
+(22, 'After INSERT/UPDATE', '2025-11-11 07:47:20'),
+(23, 'Function called with user_id: 14', '2025-11-11 07:48:44'),
+(24, 'After INSERT/UPDATE', '2025-11-11 07:48:44'),
+(25, 'Function called with user_id: 14', '2025-11-11 07:53:20'),
+(26, 'After INSERT/UPDATE', '2025-11-11 07:53:20'),
+(27, 'Function called with user_id: 14', '2025-11-11 08:01:38'),
+(28, 'After INSERT/UPDATE', '2025-11-11 08:01:38'),
+(29, 'Function called with user_id: 14', '2025-11-11 08:08:03'),
+(30, 'After INSERT/UPDATE', '2025-11-11 08:08:03'),
+(31, 'Function called with user_id: 14', '2025-11-11 08:13:14'),
+(32, 'After INSERT/UPDATE', '2025-11-11 08:13:14'),
+(33, 'Function called with user_id: 15', '2025-11-11 08:16:45'),
+(34, 'After INSERT/UPDATE', '2025-11-11 08:16:45'),
+(35, 'Function called with user_id: 6', '2025-11-11 08:36:44'),
+(36, 'After INSERT/UPDATE', '2025-11-11 08:36:44'),
+(37, 'Function called with user_id: 6', '2025-11-11 08:37:18'),
+(38, 'After INSERT/UPDATE', '2025-11-11 08:37:18');
 
 -- --------------------------------------------------------
 
@@ -249,9 +271,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `phone`, `birthdate`, `country`, `address`, `password`, `created_at`, `updated_at`) VALUES
 (1, 'Test', 'User', 'test1762485063@test.com', '1234567890', NULL, NULL, NULL, '$2y$10$WZLRZPkQT3u5mq8Z9Ae6zO2Pu8SCN8z6Pbf90.CEltD2yw7j0slv2', '2025-11-07 03:11:03', '2025-11-07 03:11:03'),
 (3, 'Test', 'User', 'test1762486645@test.com', '1234567890', NULL, NULL, NULL, '$2y$10$8r6fF9nObmeDYHDt17beo.GQSnk0IbyzJ13QhBbwdMKjKopw6I0JC', '2025-11-07 03:37:25', '2025-11-07 03:37:25'),
-(6, 'Тест', 'Тестов', 'test@test.com', '1234567890', NULL, NULL, NULL, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '2025-11-07 07:05:47', '2025-11-07 07:05:47'),
-(13, 'Алексей', 'Паршев', 'abc@mail.ru', '89128183553', NULL, NULL, NULL, '$2y$10$BcKtNv7MIGwbfLSmLJOVY.BggSDz.3ZvXGJCd2FOMsK6g2niL6MCW', '2025-11-10 11:18:49', '2025-11-10 11:18:49'),
-(14, 'Алексей', 'Паршев', 'parshevalexsei@gmail.com', '89128183553', NULL, NULL, NULL, '$2y$10$yRIp6bn11X53BRFeC8.Kp.J3TepIxpDUIDtJzEMl.54PYJ9pJwG8C', '2025-11-11 05:37:26', '2025-11-11 05:37:26');
+(6, 'Макс', 'Тестов', 'test@test.com', '1414141415', '2025-11-28', 'RU', '', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', '2025-11-07 07:05:47', '2025-11-11 08:43:39'),
+(15, 'vfvf', 'vfvf', 'asda@example.com', '+7 (912) 345-67-2424', '2025-11-29', 'KZ', 'Ул.Малая Броная', '$2y$10$lKziM/7IagxN9mGto3UJJOL/RhJdcAyjSESJ2ICCaM7mjiAE2nDou', '2025-11-11 08:16:26', '2025-11-11 08:35:20');
 
 --
 -- Триггеры `users`
@@ -300,8 +321,51 @@ CREATE TABLE `user_audit_log` (
 --
 
 INSERT INTO `user_audit_log` (`id`, `user_id`, `action`, `changed_fields`, `changed_at`) VALUES
-(11, 13, 'CREATE', 'first_name:Алексей;last_name:Паршев;email:abc@mail.ru;phone:89128183553', '2025-11-10 11:18:49'),
-(12, 14, 'CREATE', 'first_name:Алексей;last_name:Паршев;email:parshevalexsei@gmail.com;phone:89128183553', '2025-11-11 05:37:26');
+(15, 15, 'CREATE', 'first_name:Алекс;last_name:Парш;email:asda@gmail.com;phone:89020321785', '2025-11-11 08:16:26'),
+(16, 15, 'UPDATE', 'first_name:Алекс->ffff;last_name:Парш->ffff;email:asda@gmail.com->asda@example.com;phone:89020321785->+7 (912) 345-67-89', '2025-11-11 08:17:05'),
+(17, 15, 'UPDATE', 'first_name:ffff->fffd;last_name:ffff->ffff;email:asda@example.com->asda@example.com;phone:+7 (912) 345-67-89->+7 (912) 345-67-89', '2025-11-11 08:17:27'),
+(18, 15, 'UPDATE', 'first_name:fffd->fffd;last_name:ffff->ffff;email:asda@example.com->asda@example.com;phone:+7 (912) 345-67-89->+7 (912) 345-67-2424', '2025-11-11 08:18:22'),
+(19, 15, 'UPDATE', 'first_name:fffd->fffd;last_name:ffff->ffff;email:asda@example.com->asda@example.com;phone:+7 (912) 345-67-2424->+7 (912) 345-67-2424', '2025-11-11 08:34:59'),
+(20, 15, 'UPDATE', 'first_name:fffd->vfvf;last_name:ffff->vfvf;email:asda@example.com->asda@example.com;phone:+7 (912) 345-67-2424->+7 (912) 345-67-2424', '2025-11-11 08:35:20'),
+(21, 6, 'UPDATE', 'first_name:Тест->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1234567890->1234567890', '2025-11-11 08:37:04'),
+(22, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1234567890->1234567890', '2025-11-11 08:37:08'),
+(23, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1234567890->1234567890', '2025-11-11 08:39:31'),
+(24, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1234567890->1234567890', '2025-11-11 08:40:04'),
+(25, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1234567890->1234567890', '2025-11-11 08:40:21'),
+(26, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1234567890->1234567890', '2025-11-11 08:40:36'),
+(27, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1234567890->1234567890', '2025-11-11 08:40:44'),
+(28, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1234567890->1234567890', '2025-11-11 08:41:38'),
+(29, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1234567890->14141414', '2025-11-11 08:43:04'),
+(30, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:14141414->14141414', '2025-11-11 08:43:34'),
+(31, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:14141414->1414141415', '2025-11-11 08:43:39'),
+(32, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 08:44:04'),
+(33, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 08:44:18'),
+(34, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 08:44:29'),
+(35, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 08:45:11'),
+(36, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 08:47:54'),
+(37, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 08:48:16'),
+(38, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 08:48:37'),
+(39, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 08:50:55'),
+(40, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 08:52:56'),
+(41, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 08:53:00'),
+(42, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 08:54:34'),
+(43, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 08:54:40'),
+(44, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 08:54:46'),
+(45, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 08:55:08'),
+(46, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 08:55:57'),
+(47, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 08:57:50'),
+(48, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 08:59:37'),
+(49, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 09:01:06'),
+(50, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 09:01:09'),
+(51, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 09:01:11'),
+(52, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 09:02:05'),
+(53, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 09:02:41'),
+(54, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 09:03:32'),
+(55, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 09:04:10'),
+(56, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 09:04:39'),
+(57, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 09:05:12'),
+(58, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 09:06:11'),
+(59, 6, 'UPDATE', 'first_name:Макс->Макс;last_name:Тестов->Тестов;email:test@test.com->test@test.com;phone:1414141415->1414141415', '2025-11-11 09:06:28');
 
 -- --------------------------------------------------------
 
@@ -321,7 +385,8 @@ CREATE TABLE `user_login_stats` (
 
 INSERT INTO `user_login_stats` (`user_id`, `login_count`, `last_login`) VALUES
 (1, 2, '2025-11-11 07:05:43'),
-(14, 7, '2025-11-11 07:17:01');
+(6, 2, '2025-11-11 08:37:18'),
+(15, 1, '2025-11-11 08:16:45');
 
 --
 -- Индексы сохранённых таблиц
@@ -387,7 +452,7 @@ ALTER TABLE `cart_items`
 -- AUTO_INCREMENT для таблицы `debug_logs`
 --
 ALTER TABLE `debug_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT для таблицы `orders`
@@ -405,13 +470,13 @@ ALTER TABLE `rooms`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT для таблицы `user_audit_log`
 --
 ALTER TABLE `user_audit_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

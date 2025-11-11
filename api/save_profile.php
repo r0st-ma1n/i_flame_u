@@ -1,170 +1,119 @@
 <?php
+session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+require_once '../config/database.php';
+
 header('Content-Type: application/json');
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Access-Control-Allow-Origin: http://localhost");
+header("Access-Control-Allow-Credentials: true");
 
-// Начинаем сессию для проверки авторизации
-session_start();
-
-// Проверяем авторизацию
+// Проверка авторизации
 if (!isset($_SESSION['user_id'])) {
     http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Необходима авторизация']);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Необходима авторизация'
+    ]);
     exit;
 }
 
-include_once '../config/database.php';
-include_once '../models/user.php';
+$user_id = $_SESSION['user_id'];
+$input = $_POST;
 
-$database = new Database();
-$db = $database->getConnection();
-$user = new User($db);
-
-// Получаем данные из POST запроса
-$input = file_get_contents('php://input');
-$data = json_decode($input, true);
-
-if (!$data) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Неверный формат данных']);
+// Проверяем наличие действия
+if (!isset($input['action'])) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Не указано действие'
+    ]);
     exit;
 }
 
 try {
-    $user_id = $_SESSION['user_id'];
+    // ИСПРАВЬТЕ ЭТУ СТРОКУ - используйте класс Database вместо getPDO()
+    $database = new Database();
+    $pdo = $database->getConnection();
     
-    if (isset($data['action'])) {
-        switch ($data['action']) {
-            case 'update_profile':
-                // Проверяем обязательные поля
-                if (empty($data['first_name']) || empty($data['last_name']) || empty($data['email'])) {
-                    http_response_code(400);
-                    echo json_encode(['success' => false, 'message' => 'Имя, фамилия и email обязательны']);
-                    break;
-                }
-                
-                // Проверяем email на уникальность (если изменился)
-                $current_user = $user->getUserById($user_id);
-                if ($current_user && $current_user['email'] != $data['email']) {
-                    if ($user->emailExists($data['email'])) {
-                        http_response_code(400);
-                        echo json_encode(['success' => false, 'message' => 'Пользователь с таким email уже существует']);
-                        break;
-                    }
-                }
-                
-                // Обновляем профиль
-                $result = $user->updateProfile(
-                    $user_id,
-                    $data['first_name'],
-                    $data['last_name'],
-                    $data['email'],
-                    $data['phone'] ?? '',
-                    $data['birthdate'] ?? null,
-                    $data['country'] ?? '',
-                    $data['address'] ?? ''
-                );
-                
-                if ($result) {
-                    // Обновляем данные в сессии
-                    $_SESSION['user_name'] = $data['first_name'] . ' ' . $data['last_name'];
-                    $_SESSION['user_email'] = $data['email'];
-                    
-                    echo json_encode([
-                        'success' => true, 
-                        'message' => 'Данные успешно сохранены!',
-                        'user' => [
-                            'id' => $user_id,
-                            'first_name' => $data['first_name'],
-                            'last_name' => $data['last_name'],
-                            'email' => $data['email']
-                        ]
-                    ]);
-                } else {
-                    echo json_encode([
-                        'success' => false, 
-                        'message' => 'Ошибка при сохранении данных'
-                    ]);
-                }
-                break;
-
-            case 'update_password':
-                // Проверяем обязательные поля
-                if (empty($data['current_password']) || empty($data['new_password'])) {
-                    http_response_code(400);
-                    echo json_encode(['success' => false, 'message' => 'Все поля пароля обязательны']);
-                    break;
-                }
-                
-                // Проверяем текущий пароль
-                if (!$user->verifyPassword($user_id, $data['current_password'])) {
-                    http_response_code(400);
-                    echo json_encode(['success' => false, 'message' => 'Текущий пароль неверен']);
-                    break;
-                }
-                
-                // Обновляем пароль
-                if ($user->updatePassword($user_id, $data['new_password'])) {
-                    echo json_encode([
-                        'success' => true, 
-                        'message' => 'Пароль успешно изменен!'
-                    ]);
-                } else {
-                    echo json_encode([
-                        'success' => false, 
-                        'message' => 'Ошибка при изменении пароля'
-                    ]);
-                }
-                break;
-
-            case 'update_preferences':
-                // Здесь можно добавить логику для сохранения предпочтений
-                // Пока просто возвращаем успех
-                echo json_encode([
-                    'success' => true, 
-                    'message' => 'Предпочтения успешно сохранены!'
-                ]);
-                break;
-
-            case 'get_profile_data':
-                // Получаем данные пользователя для заполнения формы
-                $user_data = $user->getUserById($user_id);
-                if ($user_data) {
-                    echo json_encode([
-                        'success' => true,
-                        'user' => $user_data
-                    ]);
-                } else {
-                    echo json_encode([
-                        'success' => false,
-                        'message' => 'Не удалось загрузить данные пользователя'
-                    ]);
-                }
-                break;
-
-            default:
-                http_response_code(400);
-                echo json_encode([
-                    'success' => false, 
-                    'message' => 'Неизвестное действие'
-                ]);
-        }
-    } else {
-        http_response_code(400);
+    switch ($input['action']) {
+        case 'get_profile_data':
+    $stmt = $pdo->prepare("SELECT id, first_name, last_name, email, phone, birthdate, country, address FROM users WHERE id = ?");
+    $stmt->execute([$user_id]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($user) {
         echo json_encode([
-            'success' => false, 
-            'message' => 'Действие не указано'
+            'success' => true,
+            'user' => $user
+        ]);
+    } else {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Пользователь не найден'
         ]);
     }
-} catch (Exception $e) {
-    http_response_code(500);
+    break;
+            
+        case 'update_profile':
+    // Валидация данных
+    $first_name = trim($input['first_name']);
+    $last_name = trim($input['last_name']);
+    $email = trim($input['email']);
+    $phone = trim($input['phone']);
+    $birthdate = isset($input['birthdate']) ? trim($input['birthdate']) : null;
+    $country = isset($input['country']) ? trim($input['country']) : null;
+    $address = isset($input['address']) ? trim($input['address']) : null;
+    
+    // Проверка обязательных полей
+    if (empty($first_name) || empty($last_name) || empty($email)) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Заполните обязательные поля'
+        ]);
+        break;
+    }
+    
+    // Проверка уникальности email
+    $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ? AND id != ?");
+    $stmt->execute([$email, $user_id]);
+    if ($stmt->fetch()) {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Этот email уже используется'
+        ]);
+        break;
+    }
+    
+    // Обновление данных (ДОБАВЬТЕ НОВЫЕ ПОЛЯ)
+    $stmt = $pdo->prepare("UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, birthdate = ?, country = ?, address = ? WHERE id = ?");
+    $result = $stmt->execute([$first_name, $last_name, $email, $phone, $birthdate, $country, $address, $user_id]);
+    
+    if ($result) {
+        echo json_encode([
+            'success' => true,
+            'message' => 'Данные успешно обновлены'
+        ]);
+    } else {
+        echo json_encode([
+            'success' => false,
+            'message' => 'Ошибка при обновлении данных'
+        ]);
+    }
+    break;
+            
+        default:
+            echo json_encode([
+                'success' => false,
+                'message' => 'Неизвестное действие'
+            ]);
+    }
+    
+} catch (PDOException $e) {
+    error_log("Database error: " . $e->getMessage());
     echo json_encode([
-        'success' => false, 
-        'message' => 'Ошибка сервера: ' . $e->getMessage()
+        'success' => false,
+        'message' => 'Ошибка базы данных: ' . $e->getMessage()
     ]);
 }
 ?>

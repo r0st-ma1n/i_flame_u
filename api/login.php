@@ -1,14 +1,19 @@
 <?php
+
+session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: http://localhost");
+header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 // Логируем запрос
 file_put_contents('login_debug.log', "Login request: " . date('Y-m-d H:i:s') . "\n", FILE_APPEND);
+file_put_contents('login_debug.log', "Session ID at start: " . session_id() . "\n", FILE_APPEND);
+file_put_contents('login_debug.log', "Session data before login: " . print_r($_SESSION, true) . "\n", FILE_APPEND);
 
 try {
     include_once '../config/database.php';
@@ -51,7 +56,15 @@ try {
     if($user_data) {
         file_put_contents('login_debug.log', "Login SUCCESS for: " . $email . "\n", FILE_APPEND);
         
-        // ВЫЗОВ ФУНКЦИИ ПОДСЧЕТА АВТОРИЗАЦИЙ - ДОБАВЛЕНО
+        // ДОБАВЬТЕ ЭТО - УСТАНОВКА СЕССИИ
+        $_SESSION['user_id'] = $user_data['id'];
+        $_SESSION['user_email'] = $user_data['email'];
+        $_SESSION['user_name'] = $user_data['first_name'] . ' ' . $user_data['last_name'];
+        $_SESSION['logged_in'] = true;
+        
+        file_put_contents('login_debug.log', "Session data after login: " . print_r($_SESSION, true) . "\n", FILE_APPEND);
+        
+        // ВЫЗОВ ФУНКЦИИ ПОДСЧЕТА АВТОРИЗАЦИЙ
         $user_id = $user_data['id'];
         $login_count = incrementLoginCount($db, $user_id);
         
@@ -68,8 +81,11 @@ try {
                 "first_name" => $user_data['first_name'],
                 "last_name" => $user_data['last_name']
             ],
-            "login_count" => $login_count  // ДОБАВЛЕНО
+            "login_count" => $login_count,
+            "session_id" => session_id() // Для отладки
         ]);
+        
+        file_put_contents('login_debug.log', "Login response sent successfully\n", FILE_APPEND);
     } else {
         file_put_contents('login_debug.log', "Login FAILED for: " . $email . "\n", FILE_APPEND);
         
@@ -90,7 +106,7 @@ try {
     ]);
 }
 
-// ФУНКЦИЯ ПОДСЧЕТА АВТОРИЗАЦИЙ - ДОБАВЛЕНО
+// ФУНКЦИЯ ПОДСЧЕТА АВТОРИЗАЦИЙ
 function incrementLoginCount($db, $user_id) {
     try {
         $query = "SELECT IncrementLoginCount(:user_id) as login_count";
@@ -102,7 +118,7 @@ function incrementLoginCount($db, $user_id) {
         return $result['login_count'];
     } catch(Exception $e) {
         file_put_contents('login_debug.log', "Error in incrementLoginCount: " . $e->getMessage() . "\n", FILE_APPEND);
-        return 1; // Возвращаем 1 в случае ошибки
+        return 1;
     }
 }
 ?>

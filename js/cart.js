@@ -439,35 +439,81 @@ async function clearCart() {
     }
 }
 
-// Функция показа уведомления
+// ========== СИСТЕМА УВЕДОМЛЕНИЙ СО СТЕКОМ ==========
+let activeNotifications = [];
+const NOTIFICATION_SPACING = 80;
+
+// Переопределяем функцию showNotification
 function showNotification(message) {
     const notification = document.createElement('div');
     notification.className = 'notification';
     notification.textContent = message;
+
+    // Рассчитываем позицию для нового уведомления
+    const topPosition = 100 + (activeNotifications.length * NOTIFICATION_SPACING);
+
+    // Принудительные стили с !important
     notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        background: #4CAF50;
-        color: white;
-        padding: 15px 20px;
-        border-radius: 5px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        z-index: 1001;
-        transition: all 0.3s ease;
+        position: fixed !important;
+        top: ${topPosition}px !important;
+        right: 20px !important;
+        background: #4CAF50 !important;
+        color: white !important;
+        padding: 15px 20px !important;
+        border-radius: 5px !important;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2) !important;
+        z-index: 10010 !important;
+        transition: all 0.3s ease !important;
+        transform: translateX(100%) !important;
+        opacity: 0 !important;
+        max-width: 300px !important;
+        word-wrap: break-word !important;
     `;
 
     document.body.appendChild(notification);
 
+    // Добавляем в массив активных уведомлений
+    activeNotifications.push(notification);
+
+    // Анимация появления
     setTimeout(() => {
-        notification.style.opacity = '0';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-        }, 300);
+        notification.style.transform = 'translateX(0) !important';
+        notification.style.opacity = '1 !important';
+    }, 10);
+
+    // Автозакрытие через 3 секунды
+    setTimeout(() => {
+        closeNotification(notification);
     }, 3000);
 }
+
+function closeNotification(notification) {
+    notification.style.transform = 'translateX(100%)';
+    notification.style.opacity = '0';
+
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+
+            // Удаляем из массива и пересчитываем позиции
+            const index = activeNotifications.indexOf(notification);
+            if (index > -1) {
+                activeNotifications.splice(index, 1);
+            }
+
+            // Обновляем позиции оставшихся уведомлений
+            updateNotificationPositions();
+        }
+    }, 300);
+}
+
+function updateNotificationPositions() {
+    activeNotifications.forEach((notification, index) => {
+        const topPosition = 100 + (index * NOTIFICATION_SPACING);
+        notification.style.top = `${topPosition}px`;
+    });
+}
+// ========== КОНЕЦ СИСТЕМЫ УВЕДОМЛЕНИЙ ==========
 
 // Валидация формы
 function validateCustomerInfo() {
