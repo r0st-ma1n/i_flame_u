@@ -210,3 +210,122 @@ Session data after login: Array
 
 Login count for user 6: 2
 Login response sent successfully
+Login request: 2025-11-11 12:29:10
+Session ID at start: 26lckkeribpc0jn7n02p1antde
+Session data before login: Array
+(
+)
+
+Input: {"email":"parshevalexsei@gmail.com","password":"123456"}
+Attempting login for: parshevalexsei@gmail.com
+Login FAILED for: parshevalexsei@gmail.com
+Login request: 2025-11-11 12:29:27
+Session ID at start: 26lckkeribpc0jn7n02p1antde
+Session data before login: Array
+(
+)
+
+Input: {"email":"test@test.com","password":"password"}
+Attempting login for: test@test.com
+Login SUCCESS for: test@test.com
+Session data after login: Array
+(
+    [user_id] => 6
+    [user_email] => test@test.com
+    [user_name] => Макс Тестов
+    [logged_in] => 1
+)
+
+Login count for user 6: 3
+Login response sent successfully
+Login request: 2025-11-11 12:43:25
+Session ID at start: 26lckkeribpc0jn7n02p1antde
+Session data before login: Array
+(
+    [user_id] => 6
+    [user_email] => test@test.com
+    [user_name] => Макс Тестов
+    [logged_in] => 1
+)
+
+Input: {"email":"test@test.com","password":"password"}
+Attempting login for: test@test.com
+Login SUCCESS for: test@test.com
+Session data after login: Array
+(
+    [user_id] => 6
+    [user_email] => test@test.com
+    [user_name] => РУСТЕМ Тестов
+    [logged_in] => 1
+)
+
+Login count for user 6: 4
+Login response sent successfully
+Login request: 2025-11-11 13:11:05
+Session ID at start: qlqtjum80ed1psktfhejcpummg
+Session data before login: Array
+(
+)
+
+Input: {"email":"test@test.com","password":"password"}
+Attempting login for: test@test.com
+Login SUCCESS for: test@test.com
+Session data after login: Array
+(
+    [user_id] => 6
+    [user_email] => test@test.com
+    [user_name] => РУСТЕМ Тестов
+    [logged_in] => 1
+)
+
+Login count for user 6: 5
+Login response sent successfully
+Login request: 2025-11-11 13:14:44
+Session ID at start: qlqtjum80ed1psktfhejcpummg
+Session data before login: Array
+(
+    [user_id] => 6
+    [user_email] => test@test.com
+    [user_name] => РУСТЕМ Тестов
+    [logged_in] => 1
+)
+
+Input: {"email":"test@test.com","password":"password"}
+Attempting login for: test@test.com
+Login FAILED for: test@test.com
+Login request: 2025-11-11 13:14:50
+Session ID at start: qlqtjum80ed1psktfhejcpummg
+Session data before login: Array
+(
+    [user_id] => 6
+    [user_email] => test@test.com
+    [user_name] => РУСТЕМ Тестов
+    [logged_in] => 1
+)
+
+Input: {"email":"test@test.com","password":"password"}
+Attempting login for: test@test.com
+Login FAILED for: test@test.com
+Login request: 2025-11-11 13:15:04
+Session ID at start: qlqtjum80ed1psktfhejcpummg
+Session data before login: Array
+(
+    [user_id] => 6
+    [user_email] => test@test.com
+    [user_name] => РУСТЕМ Тестов
+    [logged_in] => 1
+)
+
+Input: {"email":"ivan@example.com","password":"password"}
+Attempting login for: ivan@example.com
+Login SUCCESS for: ivan@example.com
+Session data after login: Array
+(
+    [user_id] => 6
+    [user_email] => ivan@example.com
+    [user_name] => макс петров
+    [logged_in] => 1
+)
+
+Login count for user 6: 6
+Login response sent successfully

@@ -32,75 +32,85 @@ if (!isset($input['action'])) {
 }
 
 try {
-    // ИСПРАВЬТЕ ЭТУ СТРОКУ - используйте класс Database вместо getPDO()
     $database = new Database();
     $pdo = $database->getConnection();
     
     switch ($input['action']) {
         case 'get_profile_data':
-    $stmt = $pdo->prepare("SELECT id, first_name, last_name, email, phone, birthdate, country, address FROM users WHERE id = ?");
-    $stmt->execute([$user_id]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    if ($user) {
-        echo json_encode([
-            'success' => true,
-            'user' => $user
-        ]);
-    } else {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Пользователь не найден'
-        ]);
-    }
-    break;
+            $stmt = $pdo->prepare("SELECT id, first_name, last_name, email, phone, birthdate, country, address FROM users WHERE id = ?");
+            $stmt->execute([$user_id]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($user) {
+                echo json_encode([
+                    'success' => true,
+                    'user' => $user
+                ]);
+            } else {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Пользователь не найден'
+                ]);
+            }
+            break;
             
         case 'update_profile':
-    // Валидация данных
-    $first_name = trim($input['first_name']);
-    $last_name = trim($input['last_name']);
-    $email = trim($input['email']);
-    $phone = trim($input['phone']);
-    $birthdate = isset($input['birthdate']) ? trim($input['birthdate']) : null;
-    $country = isset($input['country']) ? trim($input['country']) : null;
-    $address = isset($input['address']) ? trim($input['address']) : null;
-    
-    // Проверка обязательных полей
-    if (empty($first_name) || empty($last_name) || empty($email)) {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Заполните обязательные поля'
-        ]);
-        break;
-    }
-    
-    // Проверка уникальности email
-    $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ? AND id != ?");
-    $stmt->execute([$email, $user_id]);
-    if ($stmt->fetch()) {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Этот email уже используется'
-        ]);
-        break;
-    }
-    
-    // Обновление данных (ДОБАВЬТЕ НОВЫЕ ПОЛЯ)
-    $stmt = $pdo->prepare("UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, birthdate = ?, country = ?, address = ? WHERE id = ?");
-    $result = $stmt->execute([$first_name, $last_name, $email, $phone, $birthdate, $country, $address, $user_id]);
-    
-    if ($result) {
-        echo json_encode([
-            'success' => true,
-            'message' => 'Данные успешно обновлены'
-        ]);
-    } else {
-        echo json_encode([
-            'success' => false,
-            'message' => 'Ошибка при обновлении данных'
-        ]);
-    }
-    break;
+            // Валидация данных
+            $first_name = trim($input['first_name']);
+            $last_name = trim($input['last_name']);
+            $email = trim($input['email']);
+            $phone = trim($input['phone']);
+            $birthdate = isset($input['birthdate']) ? trim($input['birthdate']) : null;
+            $country = isset($input['country']) ? trim($input['country']) : null;
+            $address = isset($input['address']) ? trim($input['address']) : null;
+            
+            // Проверка обязательных полей
+            if (empty($first_name) || empty($last_name) || empty($email)) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Заполните обязательные поля'
+                ]);
+                break;
+            }
+            
+            // Проверка уникальности email
+            $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ? AND id != ?");
+            $stmt->execute([$email, $user_id]);
+            if ($stmt->fetch()) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Этот email уже используется'
+                ]);
+                break;
+            }
+            
+            // Обновление данных
+            $stmt = $pdo->prepare("UPDATE users SET first_name = ?, last_name = ?, email = ?, phone = ?, birthdate = ?, country = ?, address = ? WHERE id = ?");
+            $result = $stmt->execute([$first_name, $last_name, $email, $phone, $birthdate, $country, $address, $user_id]);
+            
+            if ($result) {
+                // ПОЛУЧАЕМ ТЕКСТ ТРИГГЕРА ИЗ ЛОГОВ
+                $auditCheck = $pdo->prepare("SELECT changed_fields FROM user_audit_log WHERE user_id = ? AND action = 'UPDATE' ORDER BY changed_at DESC LIMIT 1");
+                $auditCheck->execute([$user_id]);
+                $auditResult = $auditCheck->fetch(PDO::FETCH_ASSOC);
+                
+                $trigger_text = "";
+                if ($auditResult) {
+                    $trigger_text = $auditResult['changed_fields'];
+                }
+                
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Данные успешно обновлены',
+                    'trigger_text' => $trigger_text  // ДОБАВЛЕНО
+                ]);
+            } else {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Ошибка при обновлении данных'
+                ]);
+            }
+            break;
             
         default:
             echo json_encode([

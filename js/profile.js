@@ -24,23 +24,23 @@ $(document).ready(function() {
         $.ajax({
             url: 'api/save_profile.php',
             type: 'POST',
-            data: { action: 'get_profile_data' }, // убрали user_id
+            data: { action: 'get_profile_data' },
             dataType: 'json',
             success: function(response) {
                 console.log('4. УСПЕХ AJAX:', response);
                 if (response.success) {
                     displayUserData(response.user);
                 } else {
-                    showNotification('error', 'Ошибка при загрузке данных: ' + response.message);
+                    // УБРАТЬ alert здесь
+                    console.log('Ошибка при загрузке данных: ' + response.message);
                 }
             },
             error: function(xhr, status, error) {
                 console.log('4. ОШИБКА AJAX:');
                 console.log('   - Status:', status);
                 console.log('   - Error:', error);
-                console.log('   - XHR:', xhr);
                 console.log('   - Response Text:', xhr.responseText);
-                showNotification('error', 'Ошибка соединения с сервером: ' + error);
+                // УБРАТЬ alert здесь
             }
         });
     }
@@ -244,27 +244,28 @@ $(document).ready(function() {
             success: function(response) {
                 console.log('15. Ответ сервера:', response);
                 if (response.success) {
-                    showNotification('Данные успешно сохранены!');
+                    let message = 'Данные успешно сохранены!';
 
-                    setTimeout(() => {
-                        showNotification('Триггер на сохранение данных сработал');
-                    }, 1200);
+                    if (response.trigger_text) {
+                        let formattedText = response.trigger_text
+                            .replace(/;/g, '\n')
+                            .replace(/->/g, ' → ');
 
-                    setTimeout(() => {
-                        showNotification('Триггер на логирование изменений сработал');
-                    }, 2400);
-                    loadUserData();
+                        message += '\n\n' + formattedText;
+                    }
+
+                    alert(message);
+                    loadUserData(); // ВОССТАНОВИТЬ здесь
                 } else {
-                    showNotification('Ошибка сохранения: ' + response.message);
+                    alert('Ошибка сохранения: ' + response.message);
                 }
             },
             error: function(xhr, status, error) {
                 console.log('15. ОШИБКА сохранения:');
                 console.log('   - Status:', status);
                 console.log('   - Error:', error);
-                console.log('   - XHR:', xhr);
                 console.log('   - Response Text:', xhr.responseText);
-                showNotification('error', 'Ошибка соединения с сервером: ' + error);
+                alert('Ошибка соединения с сервером: ' + error);
             }
         });
     }
