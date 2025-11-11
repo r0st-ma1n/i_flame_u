@@ -101,7 +101,8 @@ class User {
                     phone = :phone,
                     birthdate = :birthdate,
                     country = :country,
-                    address = :address
+                    address = :address,
+                    updated_at = CURRENT_TIMESTAMP
                 WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
@@ -124,7 +125,8 @@ class User {
         $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
         
         $query = "UPDATE " . $this->table_name . "
-                SET password = :password
+                SET password = :password,
+                    updated_at = CURRENT_TIMESTAMP
                 WHERE id = :id";
 
         $stmt = $this->conn->prepare($query);
